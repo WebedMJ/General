@@ -1,6 +1,6 @@
 ﻿## Script created Jan 2016
 # This script is to check for paused VMs and attempt to resume them
-#
+
 # Specify event log source for alerts
 $alerteventlog = "Application"
 $alertsource = "VM Script Check"
@@ -24,7 +24,7 @@ else {
     Exit 0
 }
 # Resume any paused VMs if possible
-$PausedVMs = Get-VM | where {$_.state -like "*Paused*"}
+$PausedVMs = Get-VM | Where-Object {$_.state -like "*Paused*"}
 if ($PausedVMs) {
     Write-Host -ForegroundColor Yellow "VMs are paused, attempting to resume...!"
     $PausedVMs | Resume-VM
@@ -38,7 +38,7 @@ else {
 Write-Host "Waiting for a while before checking again..."
 Start-Sleep -Seconds 60
 # Check for any VMs still in paused state, clear checkpoints and try to resume again
-$PausedVMs = Get-VM | where {$_.state -like "*Paused*"}
+$PausedVMs = Get-VM | Where-Object {$_.state -like "*Paused*"}
 if ($PausedVMs) {
     Write-Host -ForegroundColor Yellow "VMs are still paused, attempting clear checkpoints and resume...!"
     $PausedVMs | Remove-VMSnapshot
@@ -51,7 +51,7 @@ else {
     Exit 0
 }
 # Wait for a while before checking again...
-$MergingVMs = get-vm | where {$_.Status -eq "Merging Disks"}
+$MergingVMs = get-vm | Where-Object {$_.Status -eq "Merging Disks"}
 $n = 0
 $totaln = 60
 if ($MergingVMs) {
@@ -59,7 +59,7 @@ if ($MergingVMs) {
         $n++
         Write-Host "Waiting 1 minute for disk merge to complete... ($n/$totaln)"
         Start-Sleep -Seconds 60
-        $MergingVMs = get-vm | where {$_.Status -eq "Merging Disks"}
+        $MergingVMs = get-vm | Where-Object {$_.Status -eq "Merging Disks"}
     }
     while ($MergingVMs -and $n -lt 60)
 }
@@ -67,14 +67,14 @@ else {
     Write-Host "VMs not merging"
 }
 # Check for any VMs still in paused state, turn off VM, clear checkpoints and try to start again
-$PausedVMs = Get-VM | where {$_.state -like "*Paused*"}
+$PausedVMs = Get-VM | Where-Object {$_.state -like "*Paused*"}
 if ($PausedVMs) {
     Write-Host -ForegroundColor Yellow "VMs are still paused, turning off and attempting to clear checkpoints before starting again...!"
     $PausedVMs | Stop-VM -TurnOff
     Start-Sleep -Seconds 30
     $PausedVMs | Remove-VMSnapshot -ErrorAction Stop
     Start-Sleep -Seconds 30
-    $MergingVMs = get-vm | where {$_.Status -eq "Merging Disks"}
+    $MergingVMs = get-vm | Where-Object {$_.Status -eq "Merging Disks"}
     $n = 0
     $totaln = 60
     if ($MergingVMs) {
@@ -82,7 +82,7 @@ if ($PausedVMs) {
             $n++
             Write-Host "Waiting 1 minute for disk merge to complete... ($n/$totaln)"
             Start-Sleep -Seconds 60
-            $MergingVMs = get-vm | where {$_.Status -eq "Merging Disks"}
+            $MergingVMs = get-vm | Where-Object {$_.Status -eq "Merging Disks"}
         }
         while ($MergingVMs -and $n -lt 60)
     }
@@ -95,7 +95,7 @@ else {
     Exit 0
 }
 # Check for any VMs still in a paused state and alert
-$PausedVMs = Get-VM | where {$_.state -like "*Paused*"}
+$PausedVMs = Get-VM | Where-Object {$_.state -like "*Paused*"}
 if ($PausedVMs) {
     Write-Host -ForegroundColor Yellow "VMs are paused!"
     Write-EventLog -LogName $alerteventlog -Source $alertsource -EventId 1010 -EntryType Error -Category 0 -Message "One or more VMs are paused!"

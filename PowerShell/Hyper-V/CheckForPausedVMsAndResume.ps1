@@ -1,5 +1,6 @@
 ﻿## Script created Jan 2016
 # This script is to check for paused VMs and attempt to resume them
+# Using Write-Host for interactive use...
 
 # Specify event log source for alerts
 $alerteventlog = "Application"
@@ -69,7 +70,7 @@ else {
 # Check for any VMs still in paused state, turn off VM, clear checkpoints and try to start again
 $PausedVMs = Get-VM | Where-Object {$_.state -like "*Paused*"}
 if ($PausedVMs) {
-    Write-Host -ForegroundColor Yellow "VMs are still paused, turning off and attempting to clear checkpoints before starting again...!"
+    Write-Host -ForegroundColor Yellow "VMs are still paused, turning off and attempting to clear checkpoints before starting again..."
     $PausedVMs | Stop-VM -TurnOff
     Start-Sleep -Seconds 30
     $PausedVMs | Remove-VMSnapshot -ErrorAction Stop

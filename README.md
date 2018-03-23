@@ -1,3 +1,3 @@
 # General
 
-Random scripts and snippets.
+Misc scripts and snippets.

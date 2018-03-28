@@ -26,6 +26,15 @@ $EmailSender = "$env:computername PowerShell <ps.$lowercasehostname@domain.co.uk
 $scriptlocation = "C:\Scripts\VeeamFileRestores\AutoFileRestoreScript"
 $logfile = ".\Logs\Requests.log"
 
+$now=Get-Date
+if ((Get-Item $logfile).CreationTime -le $now.AddHours(-23))
+    {
+        $oldfile='Requests-{0}.log' -f $now.DayOfYear
+        $oldfilepath=".\Logs\$oldfile"
+        Remove-Item -Path $oldfilepath -Force -ErrorAction SilentlyContinue -WarningAction SilentlyContinue
+        Rename-Item -Path $logfile -NewName $oldfile -Force
+    }
+    
 Function Write-ToLog {
     param (
         [Parameter(Position = 0, Mandatory = $true)]$LogMessage

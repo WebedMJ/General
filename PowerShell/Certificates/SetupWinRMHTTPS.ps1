@@ -12,7 +12,7 @@ $carootcert = (Get-ChildItem -Path Cert:\LocalMachine\Root\<THUMBPRINT_OF_CA_SIG
 New-SelfSignedCertificate -KeyAlgorithm ECDSA_nistP384 -KeyExportPolicy NonExportable -NotAfter (Get-Date).AddYears(10) -Subject "CN=nuc01" -Type SSLServerAuthentication -DnsName "nuc01.ed.home","192.168.110.149" -FriendlyName "WinRM HTTPS Certificate" -CertStoreLocation "cert:\LocalMachine\My" -CurveExport CurveName -Signer $carootcert
 
 # Create HTTPS listener
-cmd /c 'winrm create winrm/config/listener?Address=*+Transport=HTTPS @{Hostname="hostname";CertificateThumbprint="8A00370A23F17D023A1472C98A0F7A0C00CD01A2"}'
+cmd /c 'winrm create winrm/config/listener?Address=*+Transport=HTTPS @{Hostname="hostname";CertificateThumbprint="<THUMBPRINT"}'
 
 # Export public cert to import on clients root store for trust
 Export-Certificate -FilePath C:\Files\CARoot.cer -Cert $carootcert

@@ -1,3 +1,8 @@
+<# NOT WORKING - Connecting to remote server nuc01 failed with the following error message :
+The server certificate on the destination computer (nuc01:5986) has the following errors:
+The SSL certificate is not appropriate for server authentication.
+#>
+
 # Configure WinRM HTTPS listener for PowerShell remoting over HTTPS
 # Create CA cert
 New-SelfSignedCertificate -KeyAlgorithm ECDSA_nistP384 -KeyExportPolicy NonExportable -NotAfter (Get-Date).AddYears(10) -Subject "CN=nuc01.ed.home" -Type SSLServerAuthentication -FriendlyName "NUC01 CA" -CertStoreLocation "cert:\LocalMachine\My" -CurveExport CurveName -KeyUsage DigitalSignature

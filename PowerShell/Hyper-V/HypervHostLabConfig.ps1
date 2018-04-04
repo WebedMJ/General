@@ -8,5 +8,3 @@ $Adapter = Get-NetAdapter | Where-Object {(($_.MacAddress -replace '-','') -eq $
 New-NetIPAddress -IPAddress "10.1.1.1" -PrefixLength 24 -InterfaceIndex $Adapter.ifIndex
 New-NetNAT -Name labNAT01 -InternalIPInterfaceAddressPrefix "10.1.1.0/24"
 New-VMResourcePool -Name "VHDs" -ResourcePoolType VHD -Paths C:\Hyper-V\VHDs
-New-VMResourcePool -Name "LAN" -ResourcePoolType Ethernet
-New-VMResourcePool -Name "LabNAT" -ResourcePoolType Ethernet

@@ -1,0 +1,1 @@
+Invoke-WebRequest -useb https://boxstarter.org/bootstrapper.ps1 | Invoke-Expression; get-boxstarter -Force

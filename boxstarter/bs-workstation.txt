@@ -1,4 +1,4 @@
-Set-ExplorerOptions -showHidenFilesFoldersDrives -showFileExtensions
+Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -DisableShowProtectedOSFiles -EnableShowFileExtensions
 Set-TaskbarOptions -Lock -Combine Always
 Enable-MicrosoftUpdate
 Install-WindowsUpdate -getUpdatesFromMS -acceptEula

@@ -1,0 +1,33 @@
+Set-ExplorerOptions -showHidenFilesFoldersDrives -showFileExtensions
+Set-TaskbarOptions -Lock -Combine Always
+Enable-MicrosoftUpdate
+Install-WindowsUpdate -getUpdatesFromMS -acceptEula
+cuninst SMB1Protocol -source windowsFeatures
+cinst Microsoft-Hyper-V-All -source windowsFeatures
+cinst Containers -source windowsFeatures
+
+cinst vscode
+cinst git
+cinst googlechrome
+cinst firefox
+cinst microsoft-teams
+cinst office365proplus
+cinst 7zip
+cinst notepadplusplus
+cinst sysinternals
+cinst gimp
+cinst python3
+cinst azure-cli
+cinst vagrant --ignorepackagecodes
+cinst packer
+cinst imgburn
+cinst cmder
+cinst nmap
+cinst microsoftazurestorageexplorer
+cinst sharex
+cinst kubernetes-cli
+cinst docker-for-windows
+cinst docker-compose
+cinst docker-machine
+cinst rsat -params '"/Server:2016"'
+cinst rdmfree

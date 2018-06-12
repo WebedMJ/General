@@ -4,7 +4,7 @@ Enable-MicrosoftUpdate
 Install-WindowsUpdate -getUpdatesFromMS -acceptEula
 cuninst SMB1Protocol -source windowsFeatures
 cinst Microsoft-Hyper-V-All -source windowsFeatures
-cinst Containers -source windowsFeatures
+cinst Microsoft-Windows-Subsystem-Linux -source windowsFeatures
 
 cinst vscode
 cinst git
@@ -26,7 +26,6 @@ cinst nmap
 cinst microsoftazurestorageexplorer
 cinst sharex
 cinst kubernetes-cli
-cinst docker-for-windows
 cinst docker-compose
 cinst docker-machine
 cinst rsat -params '"/Server:2016"'

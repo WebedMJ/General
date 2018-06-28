@@ -2,12 +2,15 @@ Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -DisableShowProte
 Set-TaskbarOptions -Lock -Combine Always
 Enable-MicrosoftUpdate
 Install-WindowsUpdate -getUpdatesFromMS -acceptEula
+
+choco feature enable -n allowGlobalConfirmation
+
 cuninst SMB1Protocol -source windowsFeatures
 cinst Microsoft-Hyper-V-All -source windowsFeatures
 cinst Microsoft-Windows-Subsystem-Linux -source windowsFeatures
 
 cinst vscode
-cinst git
+cinst git -params '"/GitAndUnixToolsOnPath"'
 cinst googlechrome
 cinst firefox
 cinst microsoft-teams
@@ -30,3 +33,5 @@ cinst docker-compose
 cinst docker-machine
 cinst rsat -params '"/Server:2016"'
 cinst rdmfree
+
+choco feature disable -n allowGlobalConfirmation

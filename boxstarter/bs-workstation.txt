@@ -33,5 +33,6 @@ cinst docker-compose
 cinst docker-machine
 cinst rsat -params '"/Server:2016"'
 cinst rdmfree
+cinst obs-studio
 
 choco feature disable -n allowGlobalConfirmation

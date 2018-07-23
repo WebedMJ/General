@@ -12,4 +12,4 @@ foreach ($User in (Get-MsolUser -All)) {
 }
 $licensedlist.Count
 # Get msol user objects for licensed users...
-$licensedMsolusers = ($e3.upn).ForEach( {Get-MsolUser -UserPrincipalName $PSItem})
+$licensedMsolusers = ($e3.UPN).ForEach( {Get-MsolUser -UserPrincipalName $PSItem})

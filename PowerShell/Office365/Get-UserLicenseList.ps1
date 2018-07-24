@@ -2,11 +2,11 @@
 $licensedlist = @()
 foreach ($User in (Get-MsolUser -All)) {
     $UserInfo = Get-MsolUser -UserPrincipalName $User.UserPrincipalName
-    foreach ($license in $User.Licenses) {
-        $licensedlist += New-Object PsObject -Property @{
-            "Username"     = "$($UserInfo.DisplayName)";
-            "UPN"          = "$($UserInfo.UserPrincipalName)";
-            "AccountSKUID" = "$($license.AccountSKUid)"
+    $licensedlist = foreach ($license in $User.Licenses) {
+        [pscustomobject]@{
+            "Username"     = "$UserInfo.DisplayName";
+            "UPN"          = "$UserInfo.UserPrincipalName";
+            "AccountSKUID" = "$license.AccountSKUid"
         }
     }
 }

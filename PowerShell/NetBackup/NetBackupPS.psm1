@@ -14,8 +14,7 @@
 
 #########################################################################################>
 
-Function Get-NBPolicy
-    {
+Function Get-NBPolicy {
     <#
     .SYNOPSIS
     Command to retrieve Netbackup Policy details on local server.
@@ -30,30 +29,24 @@ Function Get-NBPolicy
     The name of the policy to retreive further details for.
     #>
     [CmdletBinding()]
-    param 
-        ( 
-        [Parameter(Mandatory=$False, 
-        ValueFromPipeline=$False,
-        ValueFromPipelineByPropertyName=$False,
-        HelpMessage='Policy Name:')] 
+    param
+    (
+        [Parameter(Mandatory = $False,
+            ValueFromPipeline = $False,
+            ValueFromPipelineByPropertyName = $False,
+            HelpMessage = 'Policy Name:')]
         [string[]]$Policy
-        )
-    if (!$Policy -and (Test-Path "C:\Program Files\Veritas\NetBackup\bin\admincmd\bppllist.exe"))
-        {
+    )
+    if (!$Policy -and (Test-Path "C:\Program Files\Veritas\NetBackup\bin\admincmd\bppllist.exe")) {
         & "C:\Program Files\Veritas\NetBackup\bin\admincmd\bppllist.exe"
-        }
-    elseif (Test-Path "C:\Program Files\Veritas\NetBackup\bin\admincmd\bppllist.exe")
-        {
+    } elseif (Test-Path "C:\Program Files\Veritas\NetBackup\bin\admincmd\bppllist.exe") {
         & "C:\Program Files\Veritas\NetBackup\bin\admincmd\bppllist.exe" $Policy -L
-        }
-    else
-        {
+    } else {
         Write-Host "`r`nFATAL ERROR: Netbackup admin util bppllist.exe not detected!`r`n" -ForegroundColor Red
-        }
     }
+}
 
-Function Get-NBJobStatus
-    {
+Function Get-NBJobStatus {
     <#
     .SYNOPSIS
     Command to retrieve the status of Netbackup jobs on local server.
@@ -74,49 +67,36 @@ Function Get-NBJobStatus
     Specifies whether to display the result in list format.  The default is table format.
     #>
     [CmdletBinding()]
-    param 
-        ( 
-        [Parameter(Mandatory=$False, 
-        ValueFromPipeline=$False,
-        ValueFromPipelineByPropertyName=$False,
-        HelpMessage='Client Name:')] 
+    param
+    (
+        [Parameter(Mandatory = $False,
+            ValueFromPipeline = $False,
+            ValueFromPipelineByPropertyName = $False,
+            HelpMessage = 'Client Name:')]
         [string[]]$ClientName,
 
-        [Parameter(Mandatory=$False, 
-        ValueFromPipeline=$False,
-        ValueFromPipelineByPropertyName=$False,
-        HelpMessage='List Format Yes/No?')]
-        [ValidateSet("Yes","No")]
+        [Parameter(Mandatory = $False,
+            ValueFromPipeline = $False,
+            ValueFromPipelineByPropertyName = $False,
+            HelpMessage = 'List Format Yes/No?')]
+        [ValidateSet("Yes", "No")]
         [string[]]$ListFormat = "No"
-        )
-    if ($ListFormat -eq "No")
-        {
-        if (!$ClientName -and (Test-Path "C:\Program Files\Veritas\NetBackup\bin\admincmd\bperror.exe"))
-            {
+    )
+    if ($ListFormat -eq "No") {
+        if (!$ClientName -and (Test-Path "C:\Program Files\Veritas\NetBackup\bin\admincmd\bperror.exe")) {
             & "C:\Program Files\Veritas\NetBackup\bin\admincmd\bperror.exe" -backstat -U
-            }
-        elseif (Test-Path "C:\Program Files\Veritas\NetBackup\bin\admincmd\bperror.exe")
-            {
+        } elseif (Test-Path "C:\Program Files\Veritas\NetBackup\bin\admincmd\bperror.exe") {
             & "C:\Program Files\Veritas\NetBackup\bin\admincmd\bperror.exe" -client $ClientName -backstat -U
-            }
-        else
-            {
+        } else {
             Write-Host "`r`nFATAL ERROR: Netbackup admin util bperror.exe not detected!`r`n" -ForegroundColor Red
-            }
         }
-    else
-        {
-        if (!$ClientName -and (Test-Path "C:\Program Files\Veritas\NetBackup\bin\admincmd\bperror.exe"))
-            {
+    } else {
+        if (!$ClientName -and (Test-Path "C:\Program Files\Veritas\NetBackup\bin\admincmd\bperror.exe")) {
             & "C:\Program Files\Veritas\NetBackup\bin\admincmd\bperror.exe" -backstat -l
-            }
-        elseif (Test-Path "C:\Program Files\Veritas\NetBackup\bin\admincmd\bperror.exe")
-            {
+        } elseif (Test-Path "C:\Program Files\Veritas\NetBackup\bin\admincmd\bperror.exe") {
             & "C:\Program Files\Veritas\NetBackup\bin\admincmd\bperror.exe" -client $ClientName -backstat -l
-            }
-        else
-            {
+        } else {
             Write-Host "`r`nFATAL ERROR: Netbackup admin util bperror.exe not detected!`r`n" -ForegroundColor Red
-            }
         }
     }
+}

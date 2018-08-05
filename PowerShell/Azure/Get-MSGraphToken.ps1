@@ -1,8 +1,8 @@
-# vars
-$clientid = '<AppID>'
-$clientsecret = '<AppSecret>'
-$loginurl = 'https://login.microsoftonline.com'
-$tenantdomain = '<TenantName>.onmicrosoft.com'
+# vars from environment for use with Azure Functions, Jenkins, etc...
+$clientid = $env:client_id
+$clientsecret = $env:client_secret
+$loginurl = $env:login_url
+$tenantdomain = $env:tenant_domain
 
 function Get-MSGraphToken {
     param (

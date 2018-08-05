@@ -6,11 +6,16 @@ $tenantdomain = $env:tenant_domain
 
 function Get-MSGraphToken {
     param (
-        $paramsplat
+        $parmsplat
     )
-    Invoke-RestMethod @paramsplat
+    $authorization = Invoke-RestMethod @parmsplat
+    $accesstoken = $authorization.access_token
+    $tokenheader = @{
+        Authorization = "Bearer $accesstoken"
+    }
+    return $tokenheader
 }
-# get Access Token
+
 $tokenbody = @{
     client_id     = $clientid
     scope         = 'https://graph.microsoft.com/.default'
@@ -25,13 +30,8 @@ $tokenparms = @{
     ErrorAction = 'Stop'
 }
 
-$authorization = Get-MSGraphToken -paramsplat $tokenparms
-$accesstoken = $authorization.access_token
-$tokenheader = @{
-    Authorization = "Bearer $accesstoken"
-}
-
 # Example use:
+# $graphheader = Get-MSGraphToken -parmsplat $tokenparms
 # $userdetails = 'UserPrincipalName,DisplayName,accountEnabled,ProxyAddresses,id,assignedPlans,onPremisesSyncEnabled,passwordPolicies,userType'
 # [System.Uri]$Uri = "https://graph.microsoft.com/v1.0/users?`$select=$userdetails"
-# Invoke-RestMethod -Headers $tokenheader -Uri $Uri -Method Get -ErrorAction Stop
+# Invoke-RestMethod -Headers $graphheader -Uri $Uri -Method Get -ErrorAction Stop

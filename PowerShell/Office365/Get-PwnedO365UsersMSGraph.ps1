@@ -24,6 +24,7 @@ $pwnedheaders = @{
     "api-version" = 2
 }
 $pwnedbaseUri = "https://haveibeenpwned.com/api"
+
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 # Get MS Graph Access Token
@@ -117,15 +118,15 @@ try {
 }
 Write-information -MessageData "Found $($users.count) users" -InformationAction Continue
 
+## TO DO: Get admin users!! ##
+
 # List Users - Documentation
 # GET https://graph.microsoft.com/v1.0/users
-
 # List Admins (via directory roles) - Documentation
 # This is a multi-step process. First you must find the directory role for the Company Administrator,
 # which will always have the roleTemplateId of 62e90394-69f5-4237-9190-012177145e10.
 # This should not be confused by the actual directory role id, which will be different per directory.
 # GET https://graph.microsoft.com/v1.0/directoryRoles
-
 # Then you want to list the users who are a part of that directory role:
 # GET https://graph.microsoft.com/v1.0/directoryRoles/<id>/members
 
@@ -133,10 +134,8 @@ Write-information -MessageData "Found $($users.count) users" -InformationAction 
 $Report = @()
 $Breaches = 0
 foreach ($user in $testusers) {
-    #$Emails = $User.ProxyAddresses | Where-Object {$_ -match "smtp:" -and $_ -notmatch ".onmicrosoft.com"}
     $Emails = ($User.ProxyAddresses).Where{$_ -match "smtp:" -and $_ -notmatch ".onmicrosoft.com"}
     #$IsAdmin = $False
-    #$MFAUsed = $False
     $emails | ForEach-Object {
         $Email = ($_ -split ":")[1]
         Write-Host "Checking $Email"
@@ -153,9 +152,7 @@ foreach ($user in $testusers) {
             }
         }
         if ($BreachResult) {
-            #$MSOUser = Get-MsolUser -UserPrincipalName $User.UserPrincipalName
             #if ($Admins -Match $User.UserPrincipalName) {$IsAdmin = $True}
-            #if ($MSOUser.StrongAuthenticationMethods -ne $Null) {$MFAUsed = $True}
             foreach ($Breach in $BreachResult) {
                 $ReportLine = [PSCustomObject][ordered]@{
                     Email             = $email
@@ -165,7 +162,6 @@ foreach ($user in $testusers) {
                     OnPremiseAccount  = $User.onPremisesSyncEnabled
                     UserType          = $User.userType
                     PasswordPolices   = $User.passwordPolicies
-                    #LastPasswordChange = $MSOUser.LastPasswordChangeTimestamp
                     BreachName        = $breach.Name
                     BreachTitle       = $breach.Title
                     BreachDate        = $breach.BreachDate
@@ -178,7 +174,6 @@ foreach ($user in $testusers) {
                     IsRetired         = $breach.IsRetired
                     IsSpamList        = $breach.IsSpamList
                     #IsTenantAdmin      = $IsAdmin
-                    #MFAUsed            = $MFAUsed
                 }
 
                 $Report += $ReportLine

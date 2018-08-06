@@ -118,18 +118,6 @@ try {
 }
 Write-information -MessageData "Found $($users.count) users" -InformationAction Continue
 
-## TO DO: Get admin users!! ##
-
-# List Users - Documentation
-# GET https://graph.microsoft.com/v1.0/users
-# List Admins (via directory roles) - Documentation
-# This is a multi-step process. First you must find the directory role for the Company Administrator,
-# which will always have the roleTemplateId of 62e90394-69f5-4237-9190-012177145e10.
-# This should not be confused by the actual directory role id, which will be different per directory.
-# GET https://graph.microsoft.com/v1.0/directoryRoles
-# Then you want to list the users who are a part of that directory role:
-# GET https://graph.microsoft.com/v1.0/directoryRoles/<id>/members
-
 # Check all smtp addresses against haveibeenpwned
 $Report = @()
 $Breaches = 0
@@ -191,3 +179,19 @@ if ($Breaches -gt 0) {
     Write-Host "Total breaches found: " $Breaches " You can find a report in c:\temp\Breaches.csv"
 } else
 { Write-Host "No breaches found for your Office 365 mailboxes!" }
+
+## TO DO: - Get admin users
+##        - Export to CosmosDB
+##        - Create web UI
+##        - Change notifications
+
+## Resources...
+# List Users - Documentation
+# GET https://graph.microsoft.com/v1.0/users
+# List Admins (via directory roles) - Documentation
+# This is a multi-step process. First you must find the directory role for the Company Administrator,
+# which will always have the roleTemplateId of 62e90394-69f5-4237-9190-012177145e10.
+# This should not be confused by the actual directory role id, which will be different per directory.
+# GET https://graph.microsoft.com/v1.0/directoryRoles
+# Then you want to list the users who are a part of that directory role:
+# GET https://graph.microsoft.com/v1.0/directoryRoles/<id>/members

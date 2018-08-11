@@ -143,6 +143,7 @@ if ($Breaches -gt 0) {
     # $Report | Export-CSV c:\temp\Breaches.csv -NoTypeInformation
     $report.ForEach( {
             $filter = 'rowkey={0}'-f $PSItem.BreachHash
+            # https://stackoverflow.com/questions/46646120/azure-function-trigger-by-queue-with-input-data-storage-binding
             # Invoke new function here to find existing table row by passing rowkey variable with http trigger value
             # Make new function return table row as json or a "not found" response
             # Then either skip if found or add if not found - assume new

@@ -33,7 +33,7 @@ $Breaches = 0
 
 # Get users to check
 Write-Host "Fetching Users to check..."
-$Users = Get-msoluser -All
+$Users = Get-MsolUser -All
 Write-Host "Processing "$Users.count
 
 # Check all smtp addresses of users

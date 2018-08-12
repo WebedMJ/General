@@ -96,7 +96,7 @@ try {
                 $StatusCode = $_.Exception.Response.StatusCode
                 $StatusDescription = $_.Exception.Response.StatusDescription
                 $errormessageparms = @{
-                    Message  = "Request to $Uri failed with HTTP Status $StatusCode $StatusDescription"
+                    Message  = "Request failed with HTTP Status $StatusCode $StatusDescription"
                     Category = 'AuthenticationError'
                 }
                 Write-Error @errormessageparms
@@ -107,7 +107,7 @@ try {
                 $StatusCode = $_.Exception.Response.StatusCode
                 $StatusDescription = $_.Exception.Response.StatusDescription
                 $errormessageparms = @{
-                    Message  = "Request to $Uri failed with HTTP Status $StatusCode $StatusDescription"
+                    Message  = "Request failed with HTTP Status $StatusCode $StatusDescription"
                     Category = 'AuthenticationError'
                 }
                 Write-Error @errormessageparms
@@ -120,7 +120,7 @@ try {
     $StatusCode = $_.Exception.Response.StatusCode
     $StatusDescription = $_.Exception.Response.StatusDescription
     $errormessageparms = @{
-        Message  = "Request to $Uri failed with HTTP Status $StatusCode $StatusDescription"
+        Message  = "Request failed with HTTP Status $StatusCode $StatusDescription"
         Category = 'InvalidResult'
     }
     Write-Error @errormessageparms

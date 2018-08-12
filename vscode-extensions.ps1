@@ -28,5 +28,6 @@ $extensions = @(
     "vsciot-vscode.azure-iot-toolkit",
     "vscoss.vscode-ansible",
     "wholroyd.jinja"
+    "stansw.vscode-odata"
 )
 $extensions.ForEach( {code --install-extension $PSItem} )

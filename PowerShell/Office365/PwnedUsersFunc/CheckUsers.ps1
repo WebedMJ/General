@@ -6,7 +6,13 @@
 
 #vars
 $tenantdomain = $env:tenant_domain
-$tablepartitionkey = $env:table_partitionkey
+$tablepartitionkey = $env:breachtable_partkey
+$funcapp = $env:funcapp_name
+$gettablerowfuncxhead = $env:gettablerow_funckey
+$gettablerowfunchead = @{
+    "x-functions-key" = $gettablerowfuncxhead
+}
+$gettablerowfuncuri = "https://$funcapp.azurewebsites.net/api/GetTableRow"
 $pwnedheaders = @{
     "User-Agent"  = "$tenantdomain Account Check"
     "api-version" = 2
@@ -15,7 +21,7 @@ $pwnedbaseUri = "https://haveibeenpwned.com/api"
 $infoact = 'SilentlyContinue'
 
 $in = Get-Content $triggerInput -Raw
-Write-Output "PowerShell script processing queue message '$in'"
+Write-Output "Processing queue message '$in'"
 
 class UserItemQueueMsg {
     [string]$UserPrincipalName
@@ -49,6 +55,7 @@ class breachreport {
     [bool]$IsActive
     [bool]$IsRetired
     [bool]$IsSpamList
+    [string]$aztablepartitionkey
     [int32]$BreachHash
 }
 
@@ -128,6 +135,7 @@ $emails.foreach( {
                 $ReportLine.IsActive = $breach.IsActive
                 $ReportLine.IsRetired = $breach.IsRetired
                 $ReportLine.IsSpamList = $breach.IsSpamList
+                $ReportLine.aztablepartitionkey = $tablepartitionkey
                 $ReportLine.BreachHash = $breachhashid
                 $report += $ReportLine
                 Write-Information -MessageData "Breach detected for $email" -InformationAction $infoact
@@ -142,9 +150,20 @@ $emails.foreach( {
 if ($Breaches -gt 0) {
     # $Report | Export-CSV c:\temp\Breaches.csv -NoTypeInformation
     $report.ForEach( {
-            $filter = 'rowkey={0}'-f $PSItem.BreachHash
+            # $filter = 'rowkey={0}'-f $PSItem.BreachHash
+            $breachrowjson = $PSItem | ConvertTo-Json
+            $breachrowsplat = @{
+                Uri     = $gettablerowfuncuri
+                Headers = $gettablerowfunchead
+                Method  = 'Post'
+                Body    = $breachrowjson
+            }
+            $breachrowres = Invoke-RestMethod @breachrowsplat
+            Write-Output $breachrowres
             # https://stackoverflow.com/questions/46646120/azure-function-trigger-by-queue-with-input-data-storage-binding
             # JSON Payloa binding: https://docs.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings#binding-expressions-and-patterns
+            # https://docs.microsoft.com/en-us/rest/api/storageservices/Query-Entities?redirectedfrom=MSDN
+            # https://docs.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities
             # Invoke new function here to find existing table row by passing rowkey variable with http trigger value
             # Make new function return table row as json or a "not found" response
             # Then either skip if found or add if not found - assume new

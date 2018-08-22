@@ -24,7 +24,7 @@ switch ($Confirm) {
         }
     }
 }
-$script:WhatIfPreference = !$Deploy
+$script:WhatIfPreference = !$Confirm
 
 try {
     Import-Module 'C:\Program Files (x86)\Microsoft Configuration Manager\AdminConsole\bin\ConfigurationManager.psd1' -ErrorAction Stop
@@ -88,6 +88,8 @@ try {
 # Move users
 try {
     $adusers.foreach( {
+            $un = $PSItem.Name
+            Write-Host "Moving $un"
             $PSItem | Move-ADObject -TargetPath $NewUserOUDN -Credential $ADPSCred -PassThru -ErrorAction Stop
         })
 } catch {
@@ -98,7 +100,9 @@ try {
 # Move computers
 try {
     $adcomputers.foreach( {
-            $PSItem | Move-ADObject -TargetPath $NewComputerOUDN -Credential $ADPSCred
+            $cn = $PSItem.Name
+            Write-Host "Moving $cn"
+            $PSItem | Move-ADObject -TargetPath $NewComputerOUDN -Credential $ADPSCred -ErrorAction Stop
         })
 }
 catch {

@@ -2,4 +2,4 @@
 	email = 23118000+WebedMJ@users.noreply.github.com
 	name = webedmj
 [core]
-	excludesfile = %USERPROFILE%\\.gitignore
+	excludesfile = %USERPROFILE%\\.gitignore_global

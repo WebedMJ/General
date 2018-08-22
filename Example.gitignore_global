@@ -1,5 +1,5 @@
 # From https://github.com/github/gitignore
-# git config --global core.excludesfile "%USERPROFILE%\.gitignore"
+# git config --global core.excludesfile "%USERPROFILE%\.gitignore_global"
 # Compiled source #
 ###################
 *.com

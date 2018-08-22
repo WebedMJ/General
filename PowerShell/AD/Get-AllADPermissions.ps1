@@ -33,3 +33,4 @@ $alladobjects.foreach( {
             $aclreport += $adacl
         }
     })
+$aclreport | Export-Csv -Path .\adpermissionreport.csv

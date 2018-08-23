@@ -8,7 +8,7 @@ param (
     [bool]$Confirm = $false,
     $logfolder = $env:TEMP
 )
-
+$rundt = Get-Date -Format HHmmssddMMyyyy
 switch ($Confirm) {
     $true {
         Write-Host "Confirm set to true, moving users..."
@@ -47,9 +47,9 @@ $adusers.foreach( {
         $userreport += $reportline
     })
 try {
-    $userreportpath = "$logfolder\MovedUserReport.csv"
+    $userreportpath = "$logfolder\MovedUserReport-{0}.csv" -f $rundt
     Write-Host "Saving user report to $userreportpath"
-    $userreport | Export-Csv $userreportpath -NoTypeInformation
+    $userreport | Export-Csv $userreportpath -NoTypeInformation -Force
 } catch {
     Write-Host "Error creating user report, aborting..."
     exit 1
@@ -77,9 +77,9 @@ $adcomputers.foreach( {
         $computerreport += $reportline
     })
 try {
-    $computerreportpath = "$logfolder\MovedComputerReport.csv"
+    $computerreportpath = "$logfolder\MovedComputerReport-{0}.csv" -f $rundt
     Write-Host "Saving user report to $computerreportpath"
-    $computerreport | Export-Csv $computerreportpath -NoTypeInformation
+    $computerreport | Export-Csv $computerreportpath -NoTypeInformation -Force
 } catch {
     Write-Host "Error creating computer report, aborting..."
     exit 1

@@ -10,6 +10,7 @@ param (
 )
 $startloc = Get-Location
 $rundt = Get-Date -Format HHmmssddMMyyyy
+$domain = (Get-ADDomain).NetBIOSName
 switch ($Confirm) {
     $true {
         Write-Host "Confirm set to true, moving users..."
@@ -63,20 +64,17 @@ try {
 }
 
 # Gather computers...
-$alldevices = Get-CMDevice
+#$alldevices = Get-CMDevice
 $userwksnames = @()
 $computerreport = @()
 $adusers.foreach( {
         $username = $_.SamAccountName
-        $computernames = $alldevices | Where-Object {
-            $_.username -eq $username -and $_.DeviceOS -match "Workstation"
-        } |
-            Select-Object Name
+        $computernames = Get-CMUserDeviceAffinity -UserName "$domain\$username" | Select-Object ResourceName
         $userwksnames += $computernames
     })
 $adcomputers = $userwksnames.ForEach( {
         try {
-            Get-ADComputer $_.name -ErrorAction Stop
+            Get-ADComputer $_.ResourceName -ErrorAction Stop
         } catch {
             $message = $error[0].Exception.Message
             Write-Host $message
@@ -92,7 +90,7 @@ $adcomputers.foreach( {
     })
 try {
     $computerreportpath = "$logfolder\MovedComputerReport-{0}.csv" -f $rundt
-    Write-Host "Saving user report to $computerreportpath"
+    Write-Host "Saving computer report to $computerreportpath"
     $computerreport | Export-Csv $computerreportpath -NoTypeInformation -Force
 } catch {
     Write-Host "Error creating computer report, aborting..."

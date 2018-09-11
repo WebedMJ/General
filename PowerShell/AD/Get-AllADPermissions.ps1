@@ -1,3 +1,5 @@
+# Takes forever, probably too long. Needs improvement...
+# See also Get-AllADObjectsPermissions.ps1
 class ADObjectACL {
     [string]$DistinguishedName
     [string]$Name

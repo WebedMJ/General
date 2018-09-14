@@ -31,7 +31,7 @@ $tokenparms = @{
 }
 
 # Example use:
-# $graphheader = Get-MSGraphToken -parmsplat $tokenparms
-# $userdetails = 'UserPrincipalName,DisplayName,accountEnabled,ProxyAddresses,id,assignedPlans,onPremisesSyncEnabled,passwordPolicies,userType'
-# [System.Uri]$Uri = "https://graph.microsoft.com/v1.0/users?`$select=$userdetails"
-# Invoke-RestMethod -Headers $graphheader -Uri $Uri -Method Get -ErrorAction Stop
+$graphheader = Get-MSGraphToken -parmsplat $tokenparms
+$userdetails = 'UserPrincipalName,DisplayName,accountEnabled,ProxyAddresses,id,assignedPlans,onPremisesSyncEnabled,passwordPolicies,userType'
+[System.Uri]$Uri = "https://graph.microsoft.com/v1.0/users?`$select=$userdetails"
+Invoke-RestMethod -Headers $graphheader -Uri $Uri -Method Get -ErrorAction Stop

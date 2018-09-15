@@ -161,7 +161,7 @@ if ($Breaches -gt 0) {
             $breachrowres = Invoke-RestMethod @breachrowsplat
             Write-Output $breachrowres
             # https://stackoverflow.com/questions/46646120/azure-function-trigger-by-queue-with-input-data-storage-binding
-            # JSON Payloa binding: https://docs.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings#binding-expressions-and-patterns
+            # JSON Payload binding: https://docs.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings#binding-expressions-and-patterns
             # https://docs.microsoft.com/en-us/rest/api/storageservices/Query-Entities?redirectedfrom=MSDN
             # https://docs.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities
             # Invoke new function here to find existing table row by passing rowkey variable with http trigger value

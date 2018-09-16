@@ -165,7 +165,7 @@ if ($Breaches -gt 0) {
             # https://docs.microsoft.com/en-us/rest/api/storageservices/Query-Entities?redirectedfrom=MSDN
             # https://docs.microsoft.com/en-us/rest/api/storageservices/querying-tables-and-entities
             # Invoke new function here to find existing table row by passing rowkey variable with http trigger value
-            # Make new function return table row as json or a "not found" response
+            # WON'T WORK! - Make new function return table row as json or a "not found" response
             # Then either skip if found or add if not found - assume new
             # When adding table row make rowkey the breachhash and use the partitionkey from $tablepartitionkey
             # May need seperate function to upload row...

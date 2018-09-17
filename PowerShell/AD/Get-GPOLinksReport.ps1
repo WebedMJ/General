@@ -7,7 +7,7 @@ $gpolinks = ($gporeport.gpos.gpo).foreach( {
     })
 $gpolinks
 
-# Remove unlinked GPOs
+# Remove unlinked GPOs...
 # $gpolinks.Where( {!$PSItem.LinksTo}) # Misses site linked GPOs!
-$gpostoremove = $gpolinks.Where( {(!$PSItem.LinksTo) -and ($PSItem.Name -ne 'SomeGPOLinkedToASite')})
-$gpostoremove.Name.ForEach( {Get-GPO -Name $PSItem | Remove-GPO})
+# $gpostoremove = $gpolinks.Where( {(!$PSItem.LinksTo) -and ($PSItem.Name -ne 'SomeGPOLinkedToASite')})
+# $gpostoremove.Name.ForEach( {Get-GPO -Name $PSItem | Remove-GPO})

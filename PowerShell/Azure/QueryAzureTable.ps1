@@ -1,49 +1,99 @@
-# INCOMPLETE, WORK IN PROGRESS
-# https://docs.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key
-# http://blog.einbu.no/2009/08/authenticating-against-azure-table-storage/
-<#
-GET
+# $storageAccount = "accountname"
+# $accesskey = "***key***=="
+# $tableName = "tablename"
 
-application/xml
-Mon, 24 Aug 2009 22:08:56 GMT
-/myaccount/mytable
-============
-StringToSign = VERB + "\n" +
-               Content-MD5 + "\n" +
-               Content-Type + "\n" +
-               Date + "\n" +
-               CanonicalizedResource;
-#>
-# Authorization: SharedKey myaccount:bo***********************I=
+# Source: https://gcits.com/knowledge-base/use-azure-table-storage-via-powershell-rest-api/
 
-$Key = "<storagekey>"
-$Verb = "GET"
-$account = "<storageaccountname>"
-$table = "<tablename>"
-$authtype = "SharedKey" # or SharedKeyLite ???
-$dateTime = [DateTime]::UtcNow.ToString("r")
-
-Add-Type -AssemblyName System.Web
-
-# generate authorization key
-$hmacSha256 = New-Object System.Security.Cryptography.HMACSHA256
-$hmacSha256.Key = [System.Convert]::FromBase64String($key)
-
-# create authorization header
-# None of these work yet....
-# $tablesigstring = "$($verb.ToLowerInvariant())`n`n`n$($dateTime.ToLowerInvariant())`n/$($account.ToLowerInvariant())/$($table.ToLowerInvariant())"
-$tablesigstring = $dateTime.ToLowerInvariant() + "\n/" + $account.ToLowerInvariant() + "/Tables" # + $table.ToLowerInvariant()
-# $tablesigstring = "$($dateTime.ToLowerInvariant())`n/$($account.ToLowerInvariant())/$($table.ToLowerInvariant())"
-
-$tablehashsigstring = $hmacSha256.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($tablesigstring))
-$tablesignature = [System.Convert]::ToBase64String($tablehashsigstring);
-$authstring = '{0} {1}:{2}' -f $authtype,$account,$tablesignature
-# $authHeader = [System.Web.HttpUtility]::UrlEncode($authstring) # maybe use instead for authstring in header below?
-
-# Query table example...
-$tableEndpoint = "https://<storageaccountname>.table.core.windows.net/<Table>"
-$header = @{
-    Authorization=$authstring
-    "x-ms-date"=$dateTime
+function Get-AzureTableAuthorization {
+    param (
+        [Parameter(Mandatory = $true)][String]$storageAccount,
+        [Parameter(Mandatory = $true)][String]$accesskey,
+        [Parameter(Mandatory = $true)][String]$resource
+    )
+    $version = "2017-04-17"
+    $hmacsha = New-Object System.Security.Cryptography.HMACSHA256
+    $hmacsha.key = [Convert]::FromBase64String($accesskey)
+    $GMTTime = (Get-Date).ToUniversalTime().toString('R')
+    $stringToSign = "{0}{1}/{2}/{3}" -f $GMTTime, "`n", $storageAccount, $resource
+    $signature = $hmacsha.ComputeHash([Text.Encoding]::UTF8.GetBytes($stringToSign))
+    $signature = [Convert]::ToBase64String($signature)
+    $headers = @{
+        "x-ms-version" = $version
+        'x-ms-date'    = $GMTTime
+        Authorization  = 'SharedKeyLite {0}:{1}' -f $storageAccount, $signature
+        Accept         = "application/json;odata=fullmetadata"
+    }
+    return $headers
 }
-$response = Invoke-RestMethod -Uri $tableEndpoint -Method Get -Headers $header
+
+function Get-AzureTableEntities {
+    param (
+        [Parameter(Mandatory = $true)][String]$TableName
+    )
+    $resource = $tableName
+    $table_url = "https://$storageAccount.table.core.windows.net/$resource"
+    $headers = Get-AzureTableAuthorization -storageAccount $storageAccount -accesskey $accesskey -resource $resource
+    $item = Invoke-RestMethod -Method GET -Uri $table_url -Headers $headers -ContentType application/json
+    return $item.value
+}
+
+function Invoke-AzureTableUpsertEntity {
+    param (
+        [Parameter(Mandatory = $true)][String]$TableName,
+        [Parameter(Mandatory = $true)][String]$PartitionKey,
+        [Parameter(Mandatory = $true)][String]$RowKey,
+        [Parameter(Mandatory = $true)][String]$entity
+    )
+    $resource = "$tableName(PartitionKey='$PartitionKey',RowKey='$Rowkey')"
+    $table_url = "https://$storageAccount.table.core.windows.net/$resource"
+    $body = $entity | ConvertTo-Json
+    $headers = Get-AzureTableAuthorization -storageAccount $storageAccount -accesskey $accesskey -resource $resource
+    Invoke-RestMethod -Method PUT -Uri $table_url -Headers $headers -Body $body -ContentType application/json
+}
+
+function Merge-AzureTableEntity {
+    param (
+        [Parameter(Mandatory = $true)][String]$TableName,
+        [Parameter(Mandatory = $true)][String]$PartitionKey,
+        [Parameter(Mandatory = $true)][String]$RowKey,
+        [Parameter(Mandatory = $true)][String]$entity
+    )
+    $resource = "$tableName(PartitionKey='$PartitionKey',RowKey='$Rowkey')"
+    $table_url = "https://$storageAccount.table.core.windows.net/$resource"
+    $body = $entity | ConvertTo-Json
+    $headers = Get-AzureTableAuthorization -storageAccount $storageAccount -accesskey $accesskey -resource $resource
+    Invoke-RestMethod -Method MERGE -Uri $table_url -Headers $headers -ContentType application/json -Body $body
+
+}
+
+function Remove-AzureTableEntity {
+    param (
+        [Parameter(Mandatory = $true)][String]$TableName,
+        [Parameter(Mandatory = $true)][String]$PartitionKey,
+        [Parameter(Mandatory = $true)][String]$RowKey
+    )
+    $resource = "$tableName(PartitionKey='$PartitionKey',RowKey='$Rowkey')"
+    $table_url = "https://$storageAccount.table.core.windows.net/$resource"
+    $headers = Get-AzureTableAuthorization -storageAccount $storageAccount -accesskey $accesskey -resource $resource
+    Invoke-RestMethod -Method DELETE -Uri $table_url -Headers $headers -ContentType application/http
+}
+
+
+$body = @{
+    RowKey       = "ThisIsARowKey"
+    PartitionKey = "HeresAPartitionKey"
+    Address      = "123 Sample Street"
+    Age          = "24"
+}
+
+Write-Host "Getting all table entities"
+Get-AzureTableEntities -TableName Testing
+
+Write-Host "Creating a new table entity"
+Invoke-AzureTableUpsertEntity -TableName "Testing" -RowKey $body.RowKey -PartitionKey $body.PartitionKey -entity $body
+
+Write-Host "Merging with an existing table entity"
+Merge-AzureTableEntity -TableName "Testing" -RowKey $body.RowKey -PartitionKey $body.PartitionKey -entity $body
+
+Write-Host "Deleting an existing table entity"
+Remove-AzureTableEntity -TableName "Testing" -RowKey $body.RowKey -PartitionKey $body.PartitionKey

@@ -22,9 +22,9 @@ Usage:
 Get-AzureTableEntities -TableName 'Table01' -StorageAccount $StorageAccount -AccessKey $AccessKey
 ```
 
-### Invoke-AzureTableUpsertEntity
+### Add-AzureTableEntity
 
-Insert or update a row entity.
+Insert or replace a row entity.
 
 Usage:
 ```pwsh

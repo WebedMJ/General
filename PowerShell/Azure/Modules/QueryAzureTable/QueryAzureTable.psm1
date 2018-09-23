@@ -43,7 +43,7 @@ function Get-AzureTableEntities {
     return $response.value
 }
 
-function Invoke-AzureTableUpsertEntity {
+function Add-AzureTableEntity {
     param (
         [Parameter(Mandatory = $true)][String]$TableName,
         [Parameter(Mandatory = $true)][String]$PartitionKey,

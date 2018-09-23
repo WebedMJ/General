@@ -28,7 +28,7 @@ Insert or replace a row entity.
 
 Usage:
 ```pwsh
-Invoke-AzureTableUpsertEntity -TableName $table -PartitionKey $entity1.PartitionKey -RowKey $entity1.RowKey -Entity $entity1 -StorageAccount $StorageAccount -AccessKey $AccessKey
+Add-AzureTableEntity -TableName $table -PartitionKey $entity1.PartitionKey -RowKey $entity1.RowKey -Entity $entity1 -StorageAccount $StorageAccount -AccessKey $AccessKey
 ```
 
 Entity should be a hashtable representing the row data to insert or update, it should contain the partition key and a row key.

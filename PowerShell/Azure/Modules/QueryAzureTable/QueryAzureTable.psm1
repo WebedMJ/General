@@ -1,17 +1,5 @@
 # Module for interacting with Azure Table storage
 # Super helpful source: https://gcits.com/knowledge-base/use-azure-table-storage-via-powershell-rest-api/
-<#
-$entity = @{
-    RowKey       = "ThisIsARowKey"
-    PartitionKey = "HeresAPartitionKey"
-    Address      = "123 Sample Street"
-    Age          = "24"
-}
-#>
-# Requires these external vars:
-# $storageAccount = "accountname"
-# $accesskey = "***key***=="
-# $tableName = "tablename"
 
 function Get-AzureTableAuthorization {
     param (
@@ -39,7 +27,9 @@ function Get-AzureTableAuthorization {
 
 function Get-AzureTableEntities {
     param (
-        [Parameter(Mandatory = $true)][String]$TableName
+        [Parameter(Mandatory = $true)][String]$TableName,
+        [Parameter(Mandatory = $true)][String]$StorageAccount,
+        [Parameter(Mandatory = $true)][String]$AccessKey
     )
     $resource = $TableName
     $table_url = 'https://{0}.table.core.windows.net/{1}' -f $StorageAccount, $resource
@@ -58,7 +48,9 @@ function Invoke-AzureTableUpsertEntity {
         [Parameter(Mandatory = $true)][String]$TableName,
         [Parameter(Mandatory = $true)][String]$PartitionKey,
         [Parameter(Mandatory = $true)][String]$RowKey,
-        [Parameter(Mandatory = $true)][hashtable]$Entity
+        [Parameter(Mandatory = $true)][hashtable]$Entity,
+        [Parameter(Mandatory = $true)][String]$StorageAccount,
+        [Parameter(Mandatory = $true)][String]$AccessKey
     )
     $resource = "{0}(PartitionKey='{1}',RowKey='{2}')" -f $TableName, $PartitionKey, $Rowkey
     $table_url = 'https://{0}.table.core.windows.net/{1}' -f $StorageAccount, $resource
@@ -78,7 +70,9 @@ function Merge-AzureTableEntity {
         [Parameter(Mandatory = $true)][String]$TableName,
         [Parameter(Mandatory = $true)][String]$PartitionKey,
         [Parameter(Mandatory = $true)][String]$RowKey,
-        [Parameter(Mandatory = $true)][hashtable]$Entity
+        [Parameter(Mandatory = $true)][hashtable]$Entity,
+        [Parameter(Mandatory = $true)][String]$StorageAccount,
+        [Parameter(Mandatory = $true)][String]$AccessKey
     )
     $resource = "{0}(PartitionKey='{1}',RowKey='{2}')" -f $TableName, $PartitionKey, $Rowkey
     $table_url = 'https://{0}.table.core.windows.net/{1}' -f $StorageAccount, $resource
@@ -97,7 +91,9 @@ function Remove-AzureTableEntity {
     param (
         [Parameter(Mandatory = $true)][String]$TableName,
         [Parameter(Mandatory = $true)][String]$PartitionKey,
-        [Parameter(Mandatory = $true)][String]$RowKey
+        [Parameter(Mandatory = $true)][String]$RowKey,
+        [Parameter(Mandatory = $true)][String]$StorageAccount,
+        [Parameter(Mandatory = $true)][String]$AccessKey
     )
     $resource = "{0}(PartitionKey='{1}',RowKey='{2}')" -f $TableName, $PartitionKey, $Rowkey
     $table_url = 'https://{0}.table.core.windows.net/{1}' -f $StorageAccount, $resource

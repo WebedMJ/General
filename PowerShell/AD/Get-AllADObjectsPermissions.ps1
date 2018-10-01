@@ -1,5 +1,6 @@
 # See also Get-AllADPermissions.ps1
 $CSVFilesPath = $env:temp
+$dt = Get-Date -Format yyyMMddHHmmss
 Import-Module ActiveDirectory -ErrorAction Stop
 Set-Location ad:
 
@@ -20,7 +21,7 @@ $alladusers = Get-ADUser -Filter *
                     InheritanceType       = $PSItem.InheritanceType
                 }
             })
-        $acls | Export-Csv -Path $CSVFilesPath\aduserpermissions.csv -Append -NoTypeInformation
+        $acls | Export-Csv -Path "$CSVFilesPath\aduserpermissions_$dt.csv" -Append -NoTypeInformation
     })
 
 $alladcomputers = Get-ADComputer -Filter *
@@ -40,7 +41,7 @@ $alladcomputers = Get-ADComputer -Filter *
                     InheritanceType       = $PSItem.InheritanceType
                 }
             })
-        $acls | Export-Csv -Path $CSVFilesPath\adcomputerpermissions.csv -Append -NoTypeInformation
+        $acls | Export-Csv -Path "$CSVFilesPath\adcomputerpermissions_$dt.csv" -Append -NoTypeInformation
     })
 
 $alladOUs = Get-ADOrganizationalUnit -Filter *
@@ -60,5 +61,5 @@ $alladOUs = Get-ADOrganizationalUnit -Filter *
                     InheritanceType       = $PSItem.InheritanceType
                 }
             })
-        $acls | Export-Csv -Path $CSVFilesPath\adOUpermissions.csv -Append -NoTypeInformation
+        $acls | Export-Csv -Path "$CSVFilesPath\adOUpermissions_$dt.csv" -Append -NoTypeInformation
     })

@@ -22,6 +22,7 @@ $extensions = @(
     "VisualStudioOnlineApplicationInsights.application-insights",
     "vscoss.vscode-ansible",
     "wholroyd.jinja"
-    "stansw.vscode-odata"
+    "stansw.vscode-odata",
+    "coenraads.bracket-pair-colorizer-2"
 )
 $extensions.ForEach( {code --install-extension $PSItem} )

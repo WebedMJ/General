@@ -1,0 +1,17 @@
+{
+    "workbench.startupEditor": "none",
+    "team.showWelcomeMessage": false,
+    "git.enableSmartCommit": true,
+    "git.autofetch": true,
+    "git.defaultCloneDirectory": "C:\\Repos",
+    "git.confirmSync": false,
+    "files.associations": {
+        "hosts": "plaintext"
+    },
+    "powershell.codeFormatting.preset": "OTBS",
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+"terminal.integrated.shell.windows": "C:\\Program Files\\PowerShell\\6-preview\\pwsh.exe",
+"editor.minimap.enabled": false,
+"workbench.colorTheme": "Monokai Dimmed"
+}

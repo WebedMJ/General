@@ -11,15 +11,17 @@ cinst Microsoft-Windows-Subsystem-Linux -source windowsFeatures
 
 cinst vscode
 cinst git -params '"/GitAndUnixToolsOnPath"'
+cinst git-credential-manager-for-windows
+cinst poshgit
 cinst googlechrome
 cinst firefox
 cinst microsoft-teams
-cinst office365proplus
 cinst 7zip
 cinst notepadplusplus
 cinst sysinternals
 cinst gimp
 cinst python3
+cinst pip
 cinst azure-cli
 cinst vagrant --ignorepackagecodes
 cinst packer
@@ -27,12 +29,19 @@ cinst imgburn
 cinst cmder
 cinst nmap
 cinst microsoftazurestorageexplorer
-cinst sharex
 cinst kubernetes-cli
 cinst docker-compose
 cinst docker-machine
-cinst rsat -params '"/Server:2016"'
 cinst rdmfree
 cinst obs-studio
+cinst openssh
+cinst winpcap
+cinst wireshark
+cinst sql-server-management-studio
+cinst golang
+cinst pester
+cinst terraform
+cinst windbg
+cinst visualstudio2017community
 
 choco feature disable -n allowGlobalConfirmation

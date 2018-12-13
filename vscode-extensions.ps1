@@ -11,23 +11,18 @@ $extensions = @(
     "ms-kubernetes-tools.vscode-kubernetes-tools",
     "ms-mssql.mssql",
     "ms-python.python",
-    "ms-toolsai.vscode-ai",
     "ms-vscode.azure-account",
     "ms-vscode.azurecli",
     "ms-vscode.PowerShell",
-    "ms-vscode.vscode-azureextensionpack",
     "ms-vsts.team",
     "msazurermtools.azurerm-vscode-tools",
-    "mshdinsight.azure-hdinsight",
     "PeterJausovec.vscode-docker",
     "redhat.vscode-yaml",
-    "Tyriar.shell-launcher",
     "usqlextpublisher.usql-vscode-ext",
     "VisualStudioOnlineApplicationInsights.application-insights",
-    "vsciot-vscode.azure-iot-edge",
-    "vsciot-vscode.azure-iot-toolkit",
     "vscoss.vscode-ansible",
     "wholroyd.jinja"
-    "stansw.vscode-odata"
+    "stansw.vscode-odata",
+    "coenraads.bracket-pair-colorizer-2"
 )
 $extensions.ForEach( {code --install-extension $PSItem} )

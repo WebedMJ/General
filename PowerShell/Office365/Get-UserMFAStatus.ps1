@@ -1,4 +1,9 @@
-$MFAReport = Get-MsolUser -all | Select-Object DisplayName, UserPrincipalName, BlockCredential, isLicensed, @{
+$MFAReport = Get-MsolUser -all | Select-Object DisplayName, UserPrincipalName, @{
+    Name = "Enabled";
+    Expression = {
+        !$_.BlockCredential
+    }
+}, isLicensed, @{
     Name       = "MFA Status";
     Expression = {
         if ( $_.StrongAuthenticationRequirements.State -ne $null) {

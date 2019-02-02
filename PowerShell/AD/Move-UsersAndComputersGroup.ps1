@@ -16,12 +16,12 @@ switch ($Confirm) {
         Write-Host "Confirm set to true, moving users..."
     }
     $false {
-        switch (($PSBoundParameters.ContainsValue($Deploy))) {
+        switch (($PSBoundParameters.ContainsValue($Confirm))) {
             $false {
                 Write-Host "Confirm not specified, default to report only..."
             }
             default {
-                Write-Host "Deploy set to false, running in read only mode..."
+                Write-Host "Confirm set to false, running in read only mode..."
             }
         }
     }

@@ -1,5 +1,6 @@
 # Module for interacting with Azure Table storage
 # Super helpful source: https://gcits.com/knowledge-base/use-azure-table-storage-via-powershell-rest-api/
+# Make sure PowerShell session is using TLS 1.2!
 
 function Get-AzureTableAuthorization {
     param (

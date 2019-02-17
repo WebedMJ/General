@@ -23,6 +23,7 @@ $extensions = @(
     "vscoss.vscode-ansible",
     "wholroyd.jinja"
     "stansw.vscode-odata",
-    "coenraads.bracket-pair-colorizer-2"
+    "coenraads.bracket-pair-colorizer-2",
+    "robertohuertasm.vscode-icons"
 )
 $extensions.ForEach( {code --install-extension $PSItem} )

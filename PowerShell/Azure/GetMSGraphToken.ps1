@@ -1,9 +1,3 @@
-# vars from environment for use with Azure Functions, Jenkins, etc...
-$clientid = $env:client_id
-$clientsecret = $env:client_secret
-$loginurl = $env:login_url # https://login.microsoftonline.com
-$tenantdomain = $env:tenant_domain
-
 function Get-MSGraphToken {
     [CmdletBinding()]
     param (
@@ -56,7 +50,7 @@ function Get-MSGraphToken {
 }
 
 # Example use to get Azure AD users and specific properties:
-$graphheader = Get-MSGraphToken -ClientId 'GUID' -ClientSecret 'Secret' -AzureADTenantDomain 'mycompany.onmicrosoft.com'
-$userdetails = 'UserPrincipalName,DisplayName,accountEnabled,ProxyAddresses,id,assignedPlans,onPremisesSyncEnabled,passwordPolicies,userType'
-[System.Uri]$Uri = "https://graph.microsoft.com/v1.0/users?`$select=$userdetails"
-Invoke-RestMethod -Headers $graphheader -Uri $Uri -Method Get
+# $graphheader = Get-MSGraphToken -ClientId 'GUID' -ClientSecret 'Secret' -AzureADTenantDomain 'mycompany.onmicrosoft.com'
+# $userdetails = 'UserPrincipalName,DisplayName,accountEnabled,ProxyAddresses,id,assignedPlans,onPremisesSyncEnabled,passwordPolicies,userType'
+# [System.Uri]$Uri = "https://graph.microsoft.com/v1.0/users?`$select=$userdetails"
+# Invoke-RestMethod -Headers $graphheader -Uri $Uri -Method Get

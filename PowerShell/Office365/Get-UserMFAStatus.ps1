@@ -1,5 +1,5 @@
-$MFAReport = Get-MsolUser -all | Select-Object DisplayName, UserPrincipalName, @{
-    Name = "Enabled";
+$MFAReport = Get-MsolUser -All | Select-Object DisplayName, UserPrincipalName, @{
+    Name       = "Enabled";
     Expression = {
         !$_.BlockCredential
     }
@@ -10,7 +10,13 @@ $MFAReport = Get-MsolUser -all | Select-Object DisplayName, UserPrincipalName, @
             $_.StrongAuthenticationRequirements.State
         } else {
             "Disabled"
-        }}}, @{
-        Name       = "License";
-        Expression = {$_.Licenses.AccountSkuId}
-        }
+        }}
+}, @{
+    Name       = "License";
+    Expression = {$_.Licenses.AccountSkuId}
+}, @{
+    Name       = "MFA Method"
+    Expression = {
+        $_.StrongAuthenticationMethods | Select-Object MethodType, IsDefault
+    }
+}

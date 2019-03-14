@@ -1,8 +1,8 @@
 {
     "vs-kubernetes": {
-        "vs-kubernetes.helm-path": "C:\\Users\\EHaynes\\.vs-kubernetes\\tools\\helm\\windows-amd64\\helm.exe",
-        "vs-kubernetes.draft-path": "C:\\Users\\EHaynes\\.vs-kubernetes\\tools\\draft\\windows-amd64\\draft.exe",
-        "vs-kubernetes.minikube-path": "C:\\Users\\EHaynes\\.vs-kubernetes\\tools\\minikube\\windows-amd64\\minikube.exe"
+        "vs-kubernetes.helm-path": "C:\\Users\\<username>\\.vs-kubernetes\\tools\\helm\\windows-amd64\\helm.exe",
+        "vs-kubernetes.draft-path": "C:\\Users\\<username>\\.vs-kubernetes\\tools\\draft\\windows-amd64\\draft.exe",
+        "vs-kubernetes.minikube-path": "C:\\Users\\<username>\\.vs-kubernetes\\tools\\minikube\\windows-amd64\\minikube.exe"
     },
     "workbench.startupEditor": "none",
     "team.showWelcomeMessage": false,

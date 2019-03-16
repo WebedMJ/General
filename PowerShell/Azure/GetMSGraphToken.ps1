@@ -1,5 +1,6 @@
 function Get-MSGraphToken {
     [CmdletBinding()]
+    [OutputType("System.Collections.Hashtable")]
     param (
         [Parameter(Mandatory = $true)]
         $ClientId,

@@ -1,6 +1,7 @@
 # Untested - 17/02/2019
 function Get-AzureRMToken {
     [CmdletBinding()]
+    [OutputType("System.Collections.Hashtable")]
     param (
         [Parameter(Mandatory = $true)]
         $ClientId,

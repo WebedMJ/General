@@ -1,5 +1,6 @@
 # Module for interacting with Azure Table storage
 # Super helpful source: https://gcits.com/knowledge-base/use-azure-table-storage-via-powershell-rest-api/
+# Make sure PowerShell session is using TLS 1.2!
 
 function Get-AzureTableAuthorization {
     param (
@@ -32,10 +33,10 @@ function Get-AzureTableEntities {
         [Parameter(Mandatory = $true)][String]$AccessKey
     )
     $resource = $TableName
-    $table_url = 'https://{0}.table.core.windows.net/{1}' -f $StorageAccount, $resource
+    $table_url = [System.UriBuilder]::new('https', "$StorageAccount.table.core.windows.net", '443', $resource, '')
     $headers = Get-AzureTableAuthorization -StorageAccount $StorageAccount -AccessKey $AccessKey -Resource $resource
     try {
-        $response = Invoke-RestMethod -Method GET -Uri $table_url -Headers $headers -ContentType application/json
+        $response = Invoke-RestMethod -Method GET -Uri $table_url.Uri.AbsoluteUri -Headers $headers -ContentType application/json
     } catch {
         return $Error[0]
         exit 1
@@ -53,12 +54,12 @@ function Add-AzureTableEntity {
         [Parameter(Mandatory = $true)][String]$AccessKey
     )
     $resource = "{0}(PartitionKey='{1}',RowKey='{2}')" -f $TableName, $PartitionKey, $Rowkey
-    $table_url = 'https://{0}.table.core.windows.net/{1}' -f $StorageAccount, $resource
+    $table_url = [System.UriBuilder]::new('https', "$StorageAccount.table.core.windows.net", '443', $resource, '')
     $body = $Entity | ConvertTo-Json
     $ContentType = 'application/json'
     $headers = Get-AzureTableAuthorization -StorageAccount $StorageAccount -Accesskey $AccessKey -Resource $resource
     try {
-        $response = Invoke-RestMethod -Method PUT -Uri $table_url -Headers $headers -Body $body -ContentType $ContentType
+        $response = Invoke-RestMethod -Method PUT -Uri $table_url.Uri.AbsoluteUri -Headers $headers -Body $body -ContentType $ContentType
     } catch {
         return $Error[0]
         exit 1
@@ -75,12 +76,12 @@ function Merge-AzureTableEntity {
         [Parameter(Mandatory = $true)][String]$AccessKey
     )
     $resource = "{0}(PartitionKey='{1}',RowKey='{2}')" -f $TableName, $PartitionKey, $Rowkey
-    $table_url = 'https://{0}.table.core.windows.net/{1}' -f $StorageAccount, $resource
+    $table_url = [System.UriBuilder]::new('https', "$StorageAccount.table.core.windows.net", '443', $resource, '')
     $body = $Entity | ConvertTo-Json
     $ContentType = 'application/json'
     $headers = Get-AzureTableAuthorization -StorageAccount $StorageAccount -AccessKey $AccessKey -Resource $resource
     try {
-        $response = Invoke-RestMethod -Method MERGE -Uri $table_url -Headers $headers -ContentType $ContentType -Body $body
+        $response = Invoke-RestMethod -Method MERGE -Uri $table_url.Uri.AbsoluteUri -Headers $headers -ContentType $ContentType -Body $body
     } catch {
         return $Error[0]
         exit 1
@@ -96,7 +97,7 @@ function Remove-AzureTableEntity {
         [Parameter(Mandatory = $true)][String]$AccessKey
     )
     $resource = "{0}(PartitionKey='{1}',RowKey='{2}')" -f $TableName, $PartitionKey, $Rowkey
-    $table_url = 'https://{0}.table.core.windows.net/{1}' -f $StorageAccount, $resource
+    $table_url = [System.UriBuilder]::new('https', "$StorageAccount.table.core.windows.net", '443', $resource, '')
     $ContentType = 'application/http'
     $AuthHeaders = Get-AzureTableAuthorization -StorageAccount $StorageAccount -AccessKey $AccessKey -Resource $resource
     $headers = @{
@@ -107,7 +108,7 @@ function Remove-AzureTableEntity {
         'If-Match'     = '*'
     }
     try {
-        $response = Invoke-RestMethod -Method DELETE -Uri $table_url -Headers $headers -ContentType $ContentType
+        $response = Invoke-RestMethod -Method DELETE -Uri $table_url.Uri.AbsoluteUri -Headers $headers -ContentType $ContentType
     } catch {
         return $Error[0]
         exit 1

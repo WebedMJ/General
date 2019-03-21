@@ -101,7 +101,7 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags = @(
+            Tags       = @(
                 'ARM REST API',
                 'Key Vault',
                 'Azure'
@@ -111,7 +111,7 @@
             # LicenseUri = ''
 
             # A URL to the main website for this project.
-            # ProjectUri = ''
+            ProjectUri = 'https://github.com/WebedMJ/General/tree/master/PowerShell/Azure/Modules/AzureTableREST'
 
             # A URL to an icon representing this module.
             # IconUri = ''

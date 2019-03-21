@@ -21,12 +21,17 @@ function Get-AzureKeyVaultSecrets {
     #>
     [CMDLetBinding(DefaultParameterSetName = "All")]
     param (
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
         [string]$VaultName,
+        [Parameter(Mandatory = $false, ValueFromPipelineByPropertyName = $true)]
+        [string]$SecretType,
         [Parameter(Mandatory = $false, ParameterSetName = "MaxResults")]
         [ValidateRange(1, 25)]
         [int]$MaxResults,
         [Parameter(Mandatory = $false, ParameterSetName = "All")]
-        [Switch]$All
+        [Switch]$All,
+        [Parameter(Mandatory = $false)]
+        [Switch]$IncludeDisabled
     )
     $apiVersion = '7.0'
     [PSCustomObject]$response = @()
@@ -53,15 +58,38 @@ function Get-AzureKeyVaultSecrets {
             [uri]$uri = $secretsnextlink
         }
     } while (![string]::IsNullOrEmpty($secretsnextlink))
+    If ($SecretType) {
+        $response = $response | Where-Object {
+            $_.value.contentType -eq $SecretType
+        }
+    }
     $KVSecrets = @()
-    foreach ($secret in $response.value) {
-        $KVSecrets += [PSCustomObject]@{
-            VaultName     = $VaultName
-            SecretName    = $secret.id -split '/' | select-object -last 1
-            Enabled       = $secret.attributes.enabled
-            Created       = $secret.attributes.created
-            Updated       = $secret.attributes.updated
-            RecoveryLevel = $secret.attributes.recoveryLevel
+    switch ($IncludeDisabled) {
+        $true {
+            foreach ($secret in $response.value) {
+                $KVSecrets += [PSCustomObject]@{
+                    VaultName     = $VaultName
+                    SecretName    = $secret.id -split '/' | select-object -last 1
+                    SecretType    = $secret.contentType
+                    Enabled       = $secret.attributes.enabled
+                    Created       = $secret.attributes.created
+                    Updated       = $secret.attributes.updated
+                    RecoveryLevel = $secret.attributes.recoveryLevel
+                }
+            }
+        }
+        $false {
+            foreach ($secret in ($response.value | Where-Object {$_.attributes.enabled -eq 'Enabled'})) {
+                $KVSecrets += [PSCustomObject]@{
+                    VaultName     = $VaultName
+                    SecretName    = $secret.id -split '/' | select-object -last 1
+                    SecretType    = $secret.contentType
+                    Enabled       = $secret.attributes.enabled
+                    Created       = $secret.attributes.created
+                    Updated       = $secret.attributes.updated
+                    RecoveryLevel = $secret.attributes.recoveryLevel
+                }
+            }
         }
     }
     return $KVSecrets
@@ -116,6 +144,7 @@ function Get-AzureKeyVaultSecretVersions {
         $KVSecretVers += [PSCustomObject]@{
             VaultName     = $VaultName
             SecretName    = $SecretName
+            SecretType    = $secret.contentType
             SecretVersion = $secret.id -split '/' | select-object -last 1
             Enabled       = $secret.attributes.enabled
             Created       = $secret.attributes.created
@@ -158,6 +187,7 @@ function Get-AzureKeyVaultSecretValue {
     $KVSecretValue = [PSCustomObject]@{
         VaultName     = $VaultName
         SecretName    = $SecretName
+        SecretType    = $secret.contentType
         SecretVersion = $SecretVersion
         SecretValue   = $response.value
         Enabled       = $response.attributes.enabled

@@ -14,7 +14,16 @@
 function Get-AzureRESTtoken {
     <#
     .SYNOPSIS
-        Uses web/function app's Azure AD managed identity or Azure Automation RunAs to get Key Vault REST API token.
+        Uses web/function app's Azure AD managed identity or Azure Automation RunAs to get Azure REST API tokens.
+    .PARAMETER AzureResource
+        Choose which azure resource to get an authorization token for when using managed identities.
+        No effect when using Azure Automation RunAs.
+
+        Valid values: ARM, Vault
+    .PARAMETER AzureIdentity
+        Select which authentication source to use, currently supports managed identities and Azure Automation RunAs accounts.
+
+        Valid values: ManagedIdentity, AzureAutomationRunAs
     .LINK
         https://github.com/WebedMJ/General/tree/master/PowerShell/Azure/Modules/AzureRESTAuth
     #>

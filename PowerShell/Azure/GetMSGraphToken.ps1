@@ -1,3 +1,5 @@
+# Deprecated, see https://github.com/WebedMJ/General/tree/master/PowerShell/Azure/Modules/AzureRESTAuth
+#
 function Get-MSGraphToken {
     [CmdletBinding()]
     [OutputType("System.Collections.Hashtable")]

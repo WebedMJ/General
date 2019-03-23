@@ -52,4 +52,4 @@ function Get-AzureRMToken {
 }
 
 # Example use:
-# $graphheader = Get-MSGraphToken -ClientId 'GUID' -ClientSecret 'Secret' -AzureADTenantDomain 'mycompany.onmicrosoft.com'
+# $graphheader = Get-AzureRMToken -ClientId 'GUID' -ClientSecret 'Secret' -AzureADTenantDomain 'mycompany.onmicrosoft.com'

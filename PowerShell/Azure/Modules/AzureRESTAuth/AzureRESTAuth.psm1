@@ -27,6 +27,8 @@ function Get-AzureRESTtoken {
         Select which authentication source to use, currently supports managed identities, Azure Automation RunAs accounts,
         and Shared Key.
 
+        SharedKey currently supports MSGraph only.
+
         Valid values: ManagedIdentity, AzureAutomationRunAs, SharedKey
     .PARAMETER SharedKeyScope
         For use with SharedKey authorization with.
@@ -44,17 +46,19 @@ function Get-AzureRESTtoken {
     [CMDLetBinding()]
     [OutputType("System.Collections.Hashtable")]
     param (
-        [Parameter(Mandatory = $false, ParameterSetName = "ManagedIdentity")]
+        [Parameter(Mandatory = $false, ParameterSetName = "ManagedIdentity",
+            HelpMessage = "Valid values: ARM, Vault, MSGraph, AADGraph.  Maximum of one allowed.")]
         [ValidateSet("ARM", "Vault", "MSGraph", "AADGraph")]
         [ValidateCount(1, 1)]
         [string[]]$AzureResource = 'ARM',
-        [Parameter(Mandatory = $false)]
+        [Parameter(Mandatory = $false,
+            HelpMessage = "Valid values: ManagedIdentity, AzureAutomationRunAs, SharedKey.  Maximum of one allowed.")]
         [ValidateSet("ManagedIdentity", "AzureAutomationRunAs", "SharedKey")]
         [ValidateCount(1, 1)]
         [string[]]$AzureIdentity = 'ManagedIdentity',
         [Parameter(Mandatory = $true, ParameterSetName = "SharedKey",
-            HelpMessage = "Valid values: MSGraph, ARM.  Maximum of one allowed.")]
-        [ValidateSet("MSGraph", "ARM")]
+            HelpMessage = "Valid values: MSGraph.  Maximum of one allowed.")]
+        [ValidateSet("MSGraph")]
         [ValidateCount(1, 1)]
         [string[]]$SharedKeyScope,
         [Parameter(Mandatory = $true, ParameterSetName = "SharedKey")]

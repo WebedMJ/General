@@ -1,4 +1,6 @@
-# Untested - 17/02/2019
+# Deprecated, see https://github.com/WebedMJ/General/tree/master/PowerShell/Azure/Modules/AzureRESTAuth
+# Not working - 17/02/2019
+#
 function Get-AzureRMToken {
     [CmdletBinding()]
     [OutputType("System.Collections.Hashtable")]
@@ -52,4 +54,4 @@ function Get-AzureRMToken {
 }
 
 # Example use:
-# $graphheader = Get-MSGraphToken -ClientId 'GUID' -ClientSecret 'Secret' -AzureADTenantDomain 'mycompany.onmicrosoft.com'
+# $graphheader = Get-AzureRMToken -ClientId 'GUID' -ClientSecret 'Secret' -AzureADTenantDomain 'mycompany.onmicrosoft.com'

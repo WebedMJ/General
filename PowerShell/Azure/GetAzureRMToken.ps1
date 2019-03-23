@@ -1,5 +1,5 @@
 # Deprecated, see https://github.com/WebedMJ/General/tree/master/PowerShell/Azure/Modules/AzureRESTAuth
-# Untested - 17/02/2019
+# Not working - 17/02/2019
 #
 function Get-AzureRMToken {
     [CmdletBinding()]

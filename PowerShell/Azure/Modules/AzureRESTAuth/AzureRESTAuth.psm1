@@ -27,6 +27,8 @@ function Get-AzureRESTtoken {
         Select which authentication source to use, currently supports managed identities, Azure Automation RunAs accounts,
         and Shared Key.
 
+        Azure Automation RunAs uses AzureRM module.
+
         SharedKey currently supports MSGraph only.
 
         Valid values: ManagedIdentity, AzureAutomationRunAs, SharedKey
@@ -148,7 +150,7 @@ function Get-AzureRESTtoken {
             }
             'AzureAutomationRunAs' {
                 try {
-                    $Azsession = Login-AzureRmAccount @Azlogin
+                    $Azsession = Connect-AzureRmAccount @Azlogin
                     $context = Get-AzureRmContext
                     $SubscriptionId = $context.SubscriptionId
                     $cache = $context.TokenCache

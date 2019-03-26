@@ -18,7 +18,7 @@ Also see https://github.com/joonro/ConEmu-Color-Themes
     <value name="ColorTable05" type="dword" data="00069a4e"/>
     <value name="ColorTable06" type="dword" data="0000cece"/>
     <value name="ColorTable07" type="dword" data="0099917b"/>
-    <value name="ColorTable08" type="dword" data="00635c4b"/>
+    <value name="ColorTable08" type="dword" data="0099917b"/>
     <value name="ColorTable09" type="dword" data="00cc7a00"/>
     <value name="ColorTable10" type="dword" data="0007cd65"/>
     <value name="ColorTable11" type="dword" data="00b6c032"/>

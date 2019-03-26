@@ -32,8 +32,7 @@ function Write-Theme {
         $prompt += Write-Prompt -Object "$($sl.PromptSymbols.SegmentForwardSymbol) " -ForegroundColor $sl.Colors.SessionInfoBackgroundColor -BackgroundColor $sl.Colors.VirtualEnvBackgroundColor
         $prompt += Write-Prompt -Object "$($sl.PromptSymbols.VirtualEnvSymbol) $(Get-VirtualEnvName) " -ForegroundColor $sl.Colors.VirtualEnvForegroundColor -BackgroundColor $sl.Colors.VirtualEnvBackgroundColor
         $prompt += Write-Prompt -Object "$($sl.PromptSymbols.SegmentForwardSymbol) " -ForegroundColor $sl.Colors.VirtualEnvBackgroundColor -BackgroundColor $sl.Colors.PromptBackgroundColor
-    }
-    else {
+    } else {
         $prompt += Write-Prompt -Object "$($sl.PromptSymbols.SegmentForwardSymbol) " -ForegroundColor $sl.Colors.SessionInfoBackgroundColor -BackgroundColor $sl.Colors.PromptBackgroundColor
     }
 
@@ -70,10 +69,11 @@ function Write-Theme {
 $sl = $global:ThemeSettings #local settings
 $sl.PromptSymbols.StartSymbol = ''
 $sl.PromptSymbols.PromptIndicator = [char]::ConvertFromUtf32(0x276F)
-$sl.PromptSymbols.SegmentForwardSymbol = [char]::ConvertFromUtf32(0xE0B0)
+$sl.PromptSymbols.SegmentForwardSymbol = [char]::ConvertFromUtf32(0xE0C0)
 $sl.GitSymbols.BranchSymbol = [char]::ConvertFromUtf32(0xE0A0)
 $sl.GitSymbols.BranchIdenticalStatusToSymbol = [char]::ConvertFromUtf32(0x2261)
 $sl.GitSymbols.BranchUntrackedSymbol = [char]::ConvertFromUtf32(0x26a1)
+$ThemeSettings.PromptSymbols.SegmentForwardSymbol = [char]::ConvertFromUtf32(0xe0c0)
 $sl.Colors.PromptForegroundColor = [ConsoleColor]::White
 $sl.Colors.PromptSymbolColor = [ConsoleColor]::White
 $sl.Colors.PromptHighlightColor = [ConsoleColor]::DarkBlue

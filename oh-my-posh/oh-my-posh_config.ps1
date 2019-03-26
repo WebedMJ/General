@@ -18,5 +18,6 @@ Install-Module oh-my-posh -Scope CurrentUser
 
 
 # Copy custome theme psm1 file to mythemeslocation...
-# Use Monokai ConEmu theme
+# Install DarConEmu.xml theme
+# .\Install-ConEmuTheme.ps1 -ConfigPath C:\<path>\Cmder\vendor\conemu-maximus5\ConEmu.xml -Operation Add -ThemePathOrName .\DarkConEmu.xml
 # Use MesloLGL NF main console font in ConEmu

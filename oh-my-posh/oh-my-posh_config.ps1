@@ -8,7 +8,7 @@ Install-Module oh-my-posh -Scope CurrentUser
 [ScriptBlock]$CmderPrompt = {
     Import-Module posh-git
     Import-Module oh-my-posh
-    $ohmyposhthemedir = 'C:\Users\EHaynes\OneDrive - Landmark Information Group Ltd\Documents\PowerShell\PoshThemes'
+    $ohmyposhthemedir = "$env:USERPROFILE\Documents\PowerShell\PoshThemes"
     if (!(Test-Path $ohmyposhthemedir)) {
         New-Item -Path $ohmyposhthemedir -ItemType Directory
     }

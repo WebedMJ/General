@@ -104,7 +104,7 @@
             # LicenseUri = ''
 
             # A URL to the main website for this project.
-            ProjectUri = 'https://github.com/WebedMJ/General/tree/master/PowerShell/Azure/Modules/AzureTableREST'
+            ProjectUri = 'https://github.com/WebedMJ/General/tree/master/PowerShell/Azure/Modules/AzureRESTAuth'
 
             # A URL to an icon representing this module.
             # IconUri = ''

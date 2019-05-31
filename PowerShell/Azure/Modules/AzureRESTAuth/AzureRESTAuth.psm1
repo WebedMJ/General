@@ -1,5 +1,7 @@
 <#
 .SYNOPSIS
+    UPDATED TO USE Az MODULE INSTEAD OF AzureRM module in Automation Accounts!
+
     Module for interacting with Azure Automation using the ARM REST API, with specialised functions for
     WorkDay user provisioning.
     Designed to be invoked from an Azure web app or function app with managed identity enabled.
@@ -150,8 +152,8 @@ function Get-AzureRESTtoken {
             }
             'AzureAutomationRunAs' {
                 try {
-                    $Azsession = Connect-AzureRmAccount @Azlogin
-                    $context = Get-AzureRmContext
+                    $Azsession = Connect-AzAccount @Azlogin
+                    $context = Get-AzContext
                     $SubscriptionId = $context.SubscriptionId
                     $cache = $context.TokenCache
                     $cacheItems = $cache.ReadItems()

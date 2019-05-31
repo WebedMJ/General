@@ -154,7 +154,6 @@ function Get-AzureRESTtoken {
                 try {
                     $Azsession = Connect-AzAccount @Azlogin
                     $context = Get-AzContext
-                    $SubscriptionId = $context.SubscriptionId
                     $cache = $context.TokenCache
                     $cacheItems = $cache.ReadItems()
                     $accesstoken = $cacheItems[$cacheItems.Count - 1].AccessToken

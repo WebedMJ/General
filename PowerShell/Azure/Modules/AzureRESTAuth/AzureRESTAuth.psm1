@@ -29,7 +29,7 @@ function Get-AzureRESTtoken {
         Select which authentication source to use, currently supports managed identities, Azure Automation RunAs accounts,
         and Shared Key.
 
-        Azure Automation RunAs uses AzureRM module.
+        Azure Automation RunAs uses Az module.
 
         SharedKey currently supports MSGraph only.
 

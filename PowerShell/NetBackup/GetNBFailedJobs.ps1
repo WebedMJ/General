@@ -15,33 +15,25 @@
 
 #########################################################################################>
 
-if (!(Get-Module NetBackupPS -ErrorAction SilentlyContinue))
-        {
-        Import-Module NetBackupPS -WarningAction SilentlyContinue -ErrorAction Stop
-        }
+if (!(Get-Module NetBackupPS -ErrorAction SilentlyContinue)) {
+    Import-Module NetBackupPS -WarningAction SilentlyContinue -ErrorAction Stop
+}
 
 $NBJobStatusAll = Get-NBJobStatus -ListFormat Yes
 
 # Check each job for a success
 [int]$NBFailedJobs = 0
-Foreach ($NBJobStatus in $NBJobStatusAll)
-    {
-    if (($NBJobStatus.Contains("EXIT STATUS 0")) -and ($NBJobStatus.Contains("operation was successfully completed")))
-        {
+Foreach ($NBJobStatus in $NBJobStatusAll) {
+    if (($NBJobStatus.Contains("EXIT STATUS 0")) -and ($NBJobStatus.Contains("operation was successfully completed"))) {
         continue
-        }
-    else
-        {
-        $NBFailedJobs++        
-        }
+    } else {
+        $NBFailedJobs++
     }
+}
 
 # Report failed or success status to PRTG
-if ($NBFailedJobs -eq "0")
-    {
+if ($NBFailedJobs -eq "0") {
     Write-Output $NBFailedJobs":All jobs successful"
-    }
-else
-    {
+} else {
     Write-Output $NBFailedJobs":Jobs have failed!"
-    }
+}

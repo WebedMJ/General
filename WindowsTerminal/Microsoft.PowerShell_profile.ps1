@@ -10,6 +10,6 @@ if (Test-Path($ChocolateyProfile)) {
 Import-Module posh-git
 $GitPromptSettings.DefaultPromptPrefix = '$(Get-Date -f "dd-MM HH:mm:ss") '
 $GitPromptSettings.DefaultPromptSuffix = '`n$(">" * ($nestedPromptLevel + 1)) '
-$GitPromptSettings.DefaultForegroundColor = 'DarkYellow'
+$GitPromptSettings.DefaultForegroundColor = 'Green'
 
 # Clear-Host

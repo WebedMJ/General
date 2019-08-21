@@ -1,6 +1,4 @@
-$servername = 'server01'
 $certfile = 'C:\certs\webcert.pfx'
-$dollarcred = Get-Credential -Message "Enter server admin account"
 $certpassword = Read-Host -Prompt "PFX Password" -AsSecureString
 $newcertsplat = @{
     Password          = $certpassword

@@ -170,11 +170,12 @@
         ],
         "requestedTheme": "system",
         "showTabsInTitlebar": true,
-        "showTerminalTitleInTitlebar": true
+        "showTerminalTitleInTitlebar": true,
+        "wordDelimiters": " ./\\()\"'-:,.;<>~!@#$%^&*|+=[]{}~?\u2502"
     },
     "profiles": [
         {
-            "acrylicOpacity": 0.89999997615814209,
+            "acrylicOpacity": 0.8,
             "closeOnExit": true,
             "colorScheme": "Solarized Dark",
             "commandline": "C:\\Program Files\\PowerShell\\6\\pwsh.exe",
@@ -192,10 +193,9 @@
             "useAcrylic": true
         },
         {
-            "acrylicOpacity": 0.89999997615814209,
-            "background": "#012456",
+            "acrylicOpacity": 0.8,
             "closeOnExit": true,
-            "colorScheme": "Campbell",
+            "colorScheme": "Solarized Dark",
             "commandline": "powershell.exe",
             "cursorColor": "#FFFFFF",
             "cursorShape": "bar",
@@ -211,7 +211,7 @@
             "useAcrylic": true
         },
         {
-            "acrylicOpacity": 0.89999997615814209,
+            "acrylicOpacity": 0.8,
             "closeOnExit": true,
             "colorScheme": "Campbell",
             "commandline": "cmd.exe",
@@ -229,7 +229,26 @@
             "useAcrylic": true
         },
         {
-            "acrylicOpacity": 0.89999997615814209,
+            "acrylicOpacity": 0.8,
+            "closeOnExit": false,
+            "colorScheme": "Vintage",
+            "commandline": "Azure",
+            "connectionType": "{d9fcfdfa-a479-412c-83b7-c5640e61cd62}",
+            "cursorColor": "#FFFFFF",
+            "cursorShape": "bar",
+            "fontFace": "MesloLGL NF",
+            "fontSize": 10,
+            "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+            "historySize": 9001,
+            "icon": "ms-appx:///ProfileIcons/{b453ae62-4e3d-5e58-b989-0a998ec441b8}.png",
+            "name": "Azure Cloud Shell",
+            "padding": "0, 0, 0, 0",
+            "snapOnInput": true,
+            "startingDirectory": "%USERPROFILE%",
+            "useAcrylic": true
+        },
+        {
+            "acrylicOpacity": 0.8,
             "closeOnExit": true,
             "colorScheme": "Campbell",
             "commandline": "wsl.exe -d Debian",
@@ -246,7 +265,7 @@
             "useAcrylic": true
         },
         {
-            "acrylicOpacity": 0.89999997615814209,
+            "acrylicOpacity": 0.8,
             "closeOnExit": true,
             "colorScheme": "Campbell",
             "commandline": "wsl.exe -d WLE",
@@ -263,7 +282,7 @@
             "useAcrylic": true
         },
         {
-            "acrylicOpacity": 0.89999997615814209,
+            "acrylicOpacity": 0.8,
             "closeOnExit": true,
             "colorScheme": "Campbell",
             "commandline": "wsl.exe -d kali-linux",
@@ -355,7 +374,7 @@
             "brightPurple": "#6C71C4",
             "brightRed": "#CB4B16",
             "brightWhite": "#FDF6E3",
-            "brightYellow": "#ffff00",
+            "brightYellow": "#FFFF00",
             "cyan": "#2AA198",
             "foreground": "#FDF6E3",
             "green": "#859900",

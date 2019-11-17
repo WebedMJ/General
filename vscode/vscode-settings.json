@@ -1,68 +1,35 @@
+// Place your settings in this file to overwrite the default settings
 {
-    "vs-kubernetes": {
-        "vs-kubernetes.helm-path": "C:\\Users\\<username>\\.vs-kubernetes\\tools\\helm\\windows-amd64\\helm.exe",
-        "vs-kubernetes.draft-path": "C:\\Users\\<username>\\.vs-kubernetes\\tools\\draft\\windows-amd64\\draft.exe",
-        "vs-kubernetes.minikube-path": "C:\\Users\\<username>\\.vs-kubernetes\\tools\\minikube\\windows-amd64\\minikube.exe"
-    },
-    "workbench.startupEditor": "none",
     "team.showWelcomeMessage": false,
-    "git.enableSmartCommit": true,
+    "terminal.integrated.shell.windows": "C:\\Program Files\\PowerShell\\7-preview\\pwsh.exe",
     "git.autofetch": true,
-    "git.defaultCloneDirectory": "C:\\Repos",
-    "git.confirmSync": false,
     "files.associations": {
-        "hosts": "plaintext"
+        "Vagrantfile": "ruby"
     },
+    "git.enableSmartCommit": true,
+    "git.defaultCloneDirectory": "C:\\Repositories\\GitHub",
+    "git.confirmSync": false,
     "powershell.codeFormatting.preset": "OTBS",
-    "editor.formatOnPaste": true,
-    "editor.formatOnSave": true,
-    "editor.trimAutoWhitespace": true,
     "files.trimTrailingWhitespace": true,
-    "files.trimFinalNewlines": true,
-    "terminal.integrated.shell.windows": "C:\\Program Files\\PowerShell\\6-preview\\pwsh.exe",
+    "workbench.activityBar.visible": true,
+    "workbench.statusBar.visible": true,
     "editor.minimap.enabled": false,
+    "ai.homepage.openOnStartup": false,
+    "materialTheme.autoApplyIcons": false,
     "workbench.colorTheme": "Monokai Dimmed",
-    "window.zoomLevel": 0,
-    "cSpell.language": "en,en-GB",
-    "cSpell.enabledLanguageIds": [
-        "asciidoc",
-        "c",
-        "cpp",
-        "csharp",
-        "css",
-        "go",
-        "handlebars",
-        "html",
-        "jade",
-        "javascript",
-        "javascriptreact",
-        "json",
-        "latex",
-        "less",
-        "markdown",
-        "php",
-        "plaintext",
-        "powershell",
-        "pub",
-        "python",
-        "restructuredtext",
-        "rust",
-        "scss",
-        "text",
-        "typescript",
-        "typescriptreact",
-        "yml"
-    ],
-    "cSpell.userWords": [
-        "Cmdlet"
-    ],
-    "markdownlint.customRules": [
-        "{docsmsft.docs-markdown}/markdownlint-custom-rules/rules.js"
-    ],
-    "diffEditor.ignoreTrimWhitespace": true,
-    "breadcrumbs.enabled": false,
+    "workbench.startupEditor": "newUntitledFile",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+    "breadcrumbs.enabled": true,
+    "vsicons.dontShowNewVersionMessage": true,
     "workbench.iconTheme": "vscode-icons",
-    "azureFunctions.advancedCreation": false,
-    "azureFunctions.projectRuntime": "~2",
-    "http.proxySupport": "on"
+    "editor.fontFamily": "'Cascadia Code', Consolas, 'Courier New', monospace",
+    "editor.fontLigatures": true,
+    "terminal.integrated.rendererType": "dom",
+    "vs-kubernetes": {
+        "vs-kubernetes.minikube-path": "C:\\Users\\ed\\.vs-kubernetes\\tools\\minikube\\windows-amd64\\minikube.exe",
+        "vs-kubernetes.helm-path": "C:\\Users\\ed\\.vs-kubernetes\\tools\\helm\\windows-amd64\\helm.exe",
+        "vs-kubernetes.draft-path": "C:\\Users\\ed\\.vs-kubernetes\\tools\\draft\\windows-amd64\\draft.exe"
+    }
 }

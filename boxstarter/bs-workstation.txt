@@ -8,40 +8,37 @@ choco feature enable -n allowGlobalConfirmation
 cuninst SMB1Protocol -source windowsFeatures
 cinst Microsoft-Hyper-V-All -source windowsFeatures
 cinst Microsoft-Windows-Subsystem-Linux -source windowsFeatures
+cinst Windows-Defender-ApplicationGuard -source windowsFeatures
+cinst Containers-DisposableClientVM -source windowsFeatures
 
+cinst cascadiacode
 cinst vscode
 cinst git -params '"/GitAndUnixToolsOnPath"'
 cinst git-credential-manager-for-windows
 cinst poshgit
-cinst googlechrome
-cinst firefox
-cinst microsoft-teams
 cinst 7zip
 cinst notepadplusplus
 cinst sysinternals
 cinst gimp
 cinst python3
 cinst pip
-cinst azure-cli
 cinst vagrant --ignorepackagecodes
 cinst packer
-cinst imgburn
-cinst cmder
 cinst nmap
 cinst microsoftazurestorageexplorer
-cinst kubernetes-cli
-cinst docker-compose
-cinst docker-machine
-cinst rdmfree
 cinst obs-studio
-cinst openssh
 cinst winpcap
 cinst wireshark
 cinst sql-server-management-studio
 cinst golang
-cinst pester
 cinst terraform
 cinst windbg
-cinst visualstudio2017community
+cinst visualstudio2019community
+cinst brave
+cinst microsoft-edge-insider-dev
+cinst cdburnerxp
+cinst drawio
+cinst winscp
+cinst insomnia-rest-api-client
 
 choco feature disable -n allowGlobalConfirmation

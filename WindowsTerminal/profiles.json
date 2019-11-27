@@ -14,7 +14,7 @@
             "icon": "%SystemRoot%\\Installer\\{1E817527-DA06-41D9-BF92-818ABD553CA1}\\PowerShellExe.ico",
             "useAcrylic": true,
             "acrylicOpacity": 0.8,
-            "fontFace": "Cascadia Code",
+            "fontFace": "Cascadia Code PL",
             "backgroundImage": "C:\\Users\\ed\\OneDrive\\Pictures\\Windows Terminal Images\\PowerShell-NoBackground.png",
             "backgroundImageAlignment": "bottomRight",
             "backgroundImageOpacity": 0.1,
@@ -27,7 +27,7 @@
             "source": "Windows.Terminal.PowershellCore",
             "useAcrylic": true,
             "acrylicOpacity": 0.8,
-            "fontFace": "Cascadia Code",
+            "fontFace": "Cascadia Code PL",
             "backgroundImage": "C:\\Users\\ed\\OneDrive\\Pictures\\Windows Terminal Images\\PowerShell-NoBackground.png",
             "backgroundImageAlignment": "bottomRight",
             "backgroundImageOpacity": 0.1,
@@ -41,7 +41,7 @@
             "hidden": false,
             "useAcrylic": true,
             "acrylicOpacity": 0.8,
-            "fontFace": "Cascadia Code",
+            "fontFace": "Cascadia Code PL",
             "backgroundImage": "C:\\Users\\ed\\OneDrive\\Pictures\\Windows Terminal Images\\PowerShell-NoBackground.png",
             "backgroundImageAlignment": "bottomRight",
             "backgroundImageOpacity": 0.1,
@@ -55,7 +55,7 @@
             "hidden": false,
             "useAcrylic": true,
             "acrylicOpacity": 0.8,
-            "fontFace": "Cascadia Code"
+            "fontFace": "Cascadia Mono"
         },
         {
             "guid": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
@@ -64,7 +64,7 @@
             "source": "Windows.Terminal.Wsl",
             "useAcrylic": true,
             "acrylicOpacity": 0.8,
-            "fontFace": "Cascadia Code"
+            "fontFace": "Cascadia Mono PL"
         },
         {
             "guid": "{0cd3ffa6-df28-5801-92e3-7778802cafe8}",
@@ -73,7 +73,7 @@
             "source": "Windows.Terminal.Wsl",
             "useAcrylic": true,
             "acrylicOpacity": 0.8,
-            "fontFace": "Cascadia Code"
+            "fontFace": "Cascadia Mono PL"
         },
         {
             "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
@@ -82,7 +82,7 @@
             "source": "Windows.Terminal.Azure",
             "useAcrylic": true,
             "acrylicOpacity": 0.8,
-            "fontFace": "Cascadia Code",
+            "fontFace": "Cascadia Mono PL",
             "backgroundImage": "C:\\Users\\ed\\OneDrive\\Pictures\\Windows Terminal Images\\Azure-New-Logo-01-NoBackground.png",
             "backgroundImageAlignment": "bottomRight",
             "backgroundImageOpacity": 0.1,

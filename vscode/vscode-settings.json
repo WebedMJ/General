@@ -24,7 +24,7 @@
     "breadcrumbs.enabled": true,
     "vsicons.dontShowNewVersionMessage": true,
     "workbench.iconTheme": "vscode-icons",
-    "editor.fontFamily": "'Cascadia Code', Consolas, 'Courier New', monospace",
+    "editor.fontFamily": "'Cascadia Code PL', Consolas, 'Courier New', monospace",
     "editor.fontLigatures": true,
     "terminal.integrated.rendererType": "dom",
     "vs-kubernetes": {

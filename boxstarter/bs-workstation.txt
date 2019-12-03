@@ -40,5 +40,6 @@ cinst cdburnerxp
 cinst drawio
 cinst winscp
 cinst insomnia-rest-api-client
+cinst postman
 
 choco feature disable -n allowGlobalConfirmation

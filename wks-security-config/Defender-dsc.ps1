@@ -14,9 +14,9 @@ configuration mypc {
                 'C:\ProgramData\chocolatey\bin\*',
                 'C:\Users\%username%\.vs-kubernetes\tools\minikube\windows-amd64\minikube.exe'
             )
-            AttackSurfaceReductionRules_Actions= @(
+            AttackSurfaceReductionRules_Actions           = @(
                 'Enabled',
-                'Enabled',
+                'AuditMode',
                 'Enabled',
                 'Enabled',
                 'Enabled',
@@ -31,7 +31,7 @@ configuration mypc {
                 'Enabled',
                 'Enabled'
             )
-            AttackSurfaceReductionRules_Ids= @(
+            AttackSurfaceReductionRules_Ids               = @(
                 '01443614-cd74-433a-b99e-2ecdc07bfc25',
                 '26190899-1602-49e8-8b27-eb1d0a1ce869',
                 '3B576869-A4EC-4529-8536-B80A7769E899',
@@ -51,7 +51,21 @@ configuration mypc {
             CheckForSignaturesBeforeRunningScan           = $true
             CloudBlockLevel                               = 'HighPlus'
             CloudExtendedTimeout                          = 50
-            ControlledFolderAccessAllowedApplications     = @()
+            ControlledFolderAccessAllowedApplications     = @(
+                'C:\Program Files (x86)\Steam\Steam.exe',
+                'C:\Windows\System32\CompatTelRunner.exe',
+                'C:\Windows\System32\notepad.exe',
+                'C:\Program Files (x86)\Heimdal\Heimdal.AgentLoader.exe',
+                'C:\Program Files (x86)\Heimdal\Heimdal.ThorAgent.exe',
+                'C:\Users\ed\AppData\Local\BraveSoftware\Brave-Browser\Application\brave.exe',
+                'C:\Program Files (x86)\Microsoft OneDrive\OneDrive.exe',
+                'C:\Windows\System32\mstsc.exe',
+                'C:\Windows\System32\poqexec.exe',
+                'C:\Windows\System32\RuntimeBroker.exe',
+                'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe',
+                'C:\Program Files\PowerShell\7\pwsh.exe',
+                'TiWorker.exe'
+            )
             DisableArchiveScanning                        = $false
             DisableAutoExclusions                         = $false
             DisableBehaviorMonitoring                     = $false
@@ -63,11 +77,10 @@ configuration mypc {
             DisablePrivacyMode                            = $false
             DisableRealtimeMonitoring                     = $false
             DisableRemovableDriveScanning                 = $false
-            DisableRestorePoint                           = $true
+            DisableRestorePoint                           = $false
             DisableScanningMappedNetworkDrivesForFullScan = $true
             DisableScanningNetworkFiles                   = $false
             DisableScriptScanning                         = $false
-            ExclusionProcess                              = @()
             HighThreatDefaultAction                       = 'Remove'
             LowThreatDefaultAction                        = 'Quarantine'
             MAPSReporting                                 = 'Advanced'
@@ -87,11 +100,13 @@ configuration mypc {
             SignatureAuGracePeriod                        = 0
             SignatureDisableUpdateOnStartupWithoutEngine  = $false
             SignatureFirstAuGracePeriod                   = 120
-            SignatureScheduleDay                          = 'Never'
+            SignatureScheduleDay                          = 'Everyday'
             SignatureUpdateCatchupInterval                = 1
-            SignatureUpdateInterval                       = 0
+            SignatureUpdateInterval                       = 1
+            SignatureScheduleTime                         = 60
             UILockdown                                    = $false
             UnknownThreatDefaultAction                    = 'Remove'
+            SubmitSamplesConsent                          = 'Always'
         }
     }
 }

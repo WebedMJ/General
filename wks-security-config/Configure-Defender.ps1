@@ -1,7 +1,7 @@
 $setparams = @{
     AttackSurfaceReductionRules_Actions           = @(
         1,
-        1,
+        2,
         1,
         1,
         1,
@@ -48,7 +48,7 @@ $setparams = @{
     DisablePrivacyMode                            = $false
     DisableRealtimeMonitoring                     = $false
     DisableRemovableDriveScanning                 = $false
-    DisableRestorePoint                           = $true
+    DisableRestorePoint                           = $false
     DisableScanningMappedNetworkDrivesForFullScan = $true
     DisableScanningNetworkFiles                   = $false
     DisableScriptScanning                         = $false
@@ -79,10 +79,10 @@ $setparams = @{
     SignatureAuGracePeriod                        = 0
     SignatureDisableUpdateOnStartupWithoutEngine  = $false
     SignatureFirstAuGracePeriod                   = 120
-    SignatureScheduleDay                          = 8
+    SignatureScheduleDay                          = 0
     SignatureScheduleTime                         = '01:45:00'
     SignatureUpdateCatchupInterval                = 1
-    SignatureUpdateInterval                       = 0
+    SignatureUpdateInterval                       = 1
     SubmitSamplesConsent                          = 1
     UnknownThreatDefaultAction                    = 'Remove'
 }

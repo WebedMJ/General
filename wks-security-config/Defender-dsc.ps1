@@ -106,7 +106,6 @@ configuration mypc {
             SignatureScheduleTime                         = 60
             UILockdown                                    = $false
             UnknownThreatDefaultAction                    = 'Remove'
-            SubmitSamplesConsent                          = 'Always'
         }
     }
 }

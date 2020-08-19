@@ -19,8 +19,6 @@ cinst 7zip
 cinst notepadplusplus
 cinst sysinternals
 cinst gimp
-cinst python3
-cinst pip
 cinst vagrant --ignorepackagecodes
 cinst packer
 cinst nmap
@@ -28,17 +26,16 @@ cinst microsoftazurestorageexplorer
 cinst obs-studio
 cinst winpcap
 cinst wireshark
-cinst sql-server-management-studio
 cinst golang
 cinst terraform
 cinst windbg
 cinst visualstudio2019community
 cinst brave
-cinst microsoft-edge-insider-dev
 cinst cdburnerxp
 cinst drawio
 cinst winscp
 cinst insomnia-rest-api-client
 cinst postman
+cinst shellcheck
 
 choco feature disable -n allowGlobalConfirmation

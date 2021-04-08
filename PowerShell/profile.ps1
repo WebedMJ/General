@@ -4,6 +4,9 @@ Set-PSReadLineOption -AddToHistoryHandler {
     $sensitive = "password|asplaintext|token|key|secret"
     return ($line -notmatch $sensitive)
 }
-$wc = New-Object System.Net.WebClient
-$wc.Proxy.Credentials = [System.Net.CredentialCache]::DefaultNetworkCredentials
-Import-Module posh-git
+# $wc = New-Object System.Net.WebClient
+# $wc.Proxy.Credentials = [System.Net.CredentialCache]::DefaultNetworkCredentials
+# Import-Module posh-git
+Import-Module -Name Terminal-Icons
+# Requires oh-my-posh module
+Set-PoshPrompt -Theme slopey

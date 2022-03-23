@@ -50,17 +50,14 @@ $setparams = @{
     DisableRemovableDriveScanning                 = $false
     DisableRestorePoint                           = $false
     DisableScanningMappedNetworkDrivesForFullScan = $true
-    DisableScanningNetworkFiles                   = $false
+    DisableScanningNetworkFiles                   = $true
     DisableScriptScanning                         = $false
     EnableControlledFolderAccess                  = 1
     EnableLowCpuPriority                          = $false
     EnableNetworkProtection                       = 1
-    HighThreatDefaultAction                       = 'Remove'
-    LowThreatDefaultAction                        = 'Quarantine'
     MAPSReporting                                 = 2
-    ModerateThreatDefaultAction                   = 'Remove'
     PUAProtection                                 = 1
-    QuarantinePurgeItemsAfterDelay                = 14
+    QuarantinePurgeItemsAfterDelay                = 30
     RandomizeScheduleTaskTimes                    = $true
     RealTimeScanDirection                         = 'Both'
     RemediationScheduleDay                        = 0
@@ -84,30 +81,20 @@ $setparams = @{
     SignatureUpdateCatchupInterval                = 1
     SignatureUpdateInterval                       = 1
     SubmitSamplesConsent                          = 1
-    UnknownThreatDefaultAction                    = 'Remove'
 }
 Set-MpPreference @setparams
 $addparams = @{
     AttackSurfaceReductionOnlyExclusions      = @(
         '%GOPATH%\bin\*.exe',
         '%localappdata%\Temp\go-build*\*\exe\*.exe',
-        'C:\ProgramData\chocolatey\bin\*',
-        'C:\Users\%username%\.vs-kubernetes\tools\minikube\windows-amd64\minikube.exe'
+        'C:\ProgramData\chocolatey\bin\*'
     )
     ControlledFolderAccessAllowedApplications = @(
-        'C:\Program Files (x86)\Steam\Steam.exe',
         'C:\Windows\System32\CompatTelRunner.exe',
         'C:\Windows\System32\notepad.exe',
-        'C:\Program Files (x86)\Heimdal\Heimdal.AgentLoader.exe',
-        'C:\Program Files (x86)\Heimdal\Heimdal.ThorAgent.exe',
-        'C:\Users\ed\AppData\Local\BraveSoftware\Brave-Browser\Application\brave.exe',
+        'C:\Users\%username%\AppData\Local\BraveSoftware\Brave-Browser\Application\brave.exe',
         'C:\Program Files (x86)\Microsoft OneDrive\OneDrive.exe',
-        'C:\Windows\System32\mstsc.exe',
-        'C:\Windows\System32\poqexec.exe',
-        'C:\Windows\System32\RuntimeBroker.exe',
-        'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe',
-        'C:\Program Files\PowerShell\7\pwsh.exe',
-        'TiWorker.exe'
+        'C:\Windows\System32\mstsc.exe'
     )
     # ExclusionExtension
     # ExclusionPath

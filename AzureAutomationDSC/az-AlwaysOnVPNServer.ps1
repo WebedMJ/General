@@ -93,7 +93,7 @@ xxxxxx
 
         Registry SNMPPublicCommunity {
             Key       = 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\SNMP\Parameters\ValidCommunities'
-            ValueName = 'ro_lmk_community'
+            ValueName = 'ro_community'
             ValueType = 'Dword'
             ValueData = 4
             Ensure    = "Present"

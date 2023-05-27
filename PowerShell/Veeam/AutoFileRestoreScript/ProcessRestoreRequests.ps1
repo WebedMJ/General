@@ -9,11 +9,11 @@
             C:\Scripts\VeeamFileRestores\AutoFileRestoreScript\
             Designed to be run as a scheduled task
             ...all bad I know, haven't had time to refactor :(
- 
+
  VERSION HISTORY:
  1.0 2016-12-20 - Initial release
  1.1 2017-09-29 - Added logging function
- 1.2 2018-06-26 - Corrected logging inconsistencies 
+ 1.2 2018-06-26 - Corrected logging inconsistencies
 
  USAGE: .\ProcessRestoreRequests.ps1
 
@@ -30,7 +30,7 @@ Set-location -Path $scriptlocation
 
 if ((get-location).path -ne $scriptlocation) {
     Write-Host "ERROR Script not running from correct directory, aborting..." -ForegroundColor Red
-    EVENTCREATE /L Application /T ERROR /SO "LMK Veeam Restore Script" /ID 999 /D "ProcessRestoreRequests.ps1 script run from incorrect location!"
+    EVENTCREATE /L Application /T ERROR /SO "mycorp Veeam Restore Script" /ID 999 /D "ProcessRestoreRequests.ps1 script run from incorrect location!"
     exit
 }
 

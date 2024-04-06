@@ -14,9 +14,10 @@ $wingetApps = @(
     'JanDeDobbeleer.OhMyPosh'
     'Notepad++.Notepad++'
     'Mozilla.Firefox'
-    'Valve.Steam'
     'Insomnia.Insomnia'
     'Microsoft.AzureCLI'
+    'Valve.Steam'
+    'EpicGames.EpicGamesLauncher'
 )
 
 $vscodeExtensions = @(
@@ -52,6 +53,8 @@ $vscodeExtensions = @(
     'wholroyd.jinja'
     'visualstudioexptteam.vscodeintellicode'
     'ms-toolsai.jupyter'
+    'oderwat.indent-rainbow'
+    'gruntfuggly.todo-tree'
 )
 
 $addDefenderParams = @{
@@ -127,20 +130,16 @@ $setDefenderParams = @{
     DisableBlockAtFirstSeen                       = $false
     DisableCatchupFullScan                        = $false
     DisableCatchupQuickScan                       = $false
-    DisableCoreService1DSTelemetry                = $false
-    DisableCoreServiceECSIntegration              = $false
     DisableCpuThrottleOnIdleScans                 = $true
     DisableDatagramProcessing                     = $false
     DisableDnsOverTcpParsing                      = $false
     DisableDnsParsing                             = $false
     DisableEmailScanning                          = $false
-    DisableFtpParsing                             = $false
     DisableHttpParsing                            = $false
     DisableIntrusionPreventionSystem              = $false
     DisableIOAVProtection                         = $false
     DisableNetworkProtectionPerfTelemetry         = $false
     DisablePrivacyMode                            = $false
-    DisableQuicParsing                            = $false
     DisableRdpParsing                             = $false
     DisableRealtimeMonitoring                     = $false
     DisableRemovableDriveScanning                 = $false
@@ -148,7 +147,6 @@ $setDefenderParams = @{
     DisableScanningMappedNetworkDrivesForFullScan = $true
     DisableScanningNetworkFiles                   = $true
     DisableScriptScanning                         = $false
-    DisableSmtpParsing                            = $false
     DisableSshParsing                             = $false
     DisableTlsParsing                             = $false
     EnableControlledFolderAccess                  = 1
@@ -187,6 +185,7 @@ try {
     Add-MpPreference @addDefenderParams
     Set-MpPreference @setDefenderParams
 } catch {
+    write-host $_
     throw "Error configuring defender"
 }
 
@@ -208,16 +207,27 @@ $vscodeExtensions | ForEach-Object {
     }
 }
 
+Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+
 try {
     $pwshPath = (Get-ChildItem -Path 'C:\Program Files\WindowsApps\Microsoft.PowerShell_7*\pwsh.exe' |
         Sort-Object -Property LastWriteTime -Descending | Select-Object -First 1).FullName
-    Write-Host "Adding [$pwshPath] to controlled folder access allowed applications..." -ForegroundColor Blue
-    Add-MpPreference -ControlledFolderAccessAllowedApplications $pwshPath
+    if ($pwshPath) {
+        Write-Host "Adding [$pwshPath] to controlled folder access allowed applications..." -ForegroundColor Blue
+        Add-MpPreference -ControlledFolderAccessAllowedApplications $pwshPath
+    } else {
+        Write-Host "No msstore version of pwsh 7 to add to controlled folder access" -ForegroundColor DarkYellow
+    }
+
 
     $snipToolPath = (Get-ChildItem -Path 'C:\Program Files\WindowsApps\Microsoft.ScreenSketch*\SnippingTool\SnippingTool.exe' |
         Sort-Object -Property LastWriteTime -Descending | Select-Object -First 1).FullName
-    Write-Host "Adding [$snipToolPath] to controlled folder access allowed applications..." -ForegroundColor Blue
-    Add-MpPreference -ControlledFolderAccessAllowedApplications $snipToolPath
+    if ($snipToolPath) {
+        Write-Host "Adding [$snipToolPath] to controlled folder access allowed applications..." -ForegroundColor Blue
+        Add-MpPreference -ControlledFolderAccessAllowedApplications $snipToolPath
+    } else {
+        Write-Host "No msstore version of snipping tool to add to controlled folder access" -ForegroundColor DarkYellow
+    }
 
     $pwshScript = {
         $pwshModules = @(

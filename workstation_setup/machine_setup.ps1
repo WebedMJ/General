@@ -69,17 +69,17 @@ $addDefenderParams = @{
         "$env:APPDATA\Python\Python312\Scripts\pipenv.exe"
     )
     ControlledFolderAccessAllowedApplications = @(
-        "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
-        "C:\Program Files (x86)\Steam\Steam.exe"
-        "C:\Program Files\Microsoft OneDrive\OneDrive.exe"
-        "C:\Program Files\Microsoft VS Code\Code.exe"
-        "C:\Program Files\Notepad++\notepad++.exe"
-        "C:\Program Files\PowerShell\7\pwsh.exe"
+        'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
+        'C:\Program Files (x86)\Steam\Steam.exe'
+        'C:\Program Files\Microsoft OneDrive\OneDrive.exe'
+        'C:\Program Files\Microsoft VS Code\Code.exe'
+        'C:\Program Files\Notepad++\notepad++.exe'
+        'C:\Program Files\PowerShell\7\pwsh.exe'
         "$env:LOCALAPPDATA\Microsoft\Teams\Update.exe"
         "$env:LOCALAPPDATA\Programs\signal-desktop\Signal.exe"
-        "C:\Windows\System32\mstsc.exe"
-        "C:\Windows\System32\notepad.exe"
-        "C:\Windows\System32\WinSAT.exe"
+        'C:\Windows\System32\mstsc.exe'
+        'C:\Windows\System32\notepad.exe'
+        'C:\Windows\System32\WinSAT.exe'
     )
 }
 
@@ -181,12 +181,12 @@ $setDefenderParams = @{
 }
 
 try {
-    Write-Host "Configuring Defender..." -ForegroundColor Blue
+    Write-Host 'Configuring Defender...' -ForegroundColor Blue
     Add-MpPreference @addDefenderParams
     Set-MpPreference @setDefenderParams
 } catch {
-    write-host $_
-    throw "Error configuring defender"
+    Write-Host $_
+    throw 'Error configuring defender'
 }
 
 $wingetApps | ForEach-Object {
@@ -211,45 +211,45 @@ Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 
 try {
     $pwshPath = (Get-ChildItem -Path 'C:\Program Files\WindowsApps\Microsoft.PowerShell_7*\pwsh.exe' |
-        Sort-Object -Property LastWriteTime -Descending | Select-Object -First 1).FullName
+            Sort-Object -Property LastWriteTime -Descending | Select-Object -First 1).FullName
     if ($pwshPath) {
         Write-Host "Adding [$pwshPath] to controlled folder access allowed applications..." -ForegroundColor Blue
         Add-MpPreference -ControlledFolderAccessAllowedApplications $pwshPath
     } else {
-        Write-Host "No msstore version of pwsh 7 to add to controlled folder access" -ForegroundColor DarkYellow
+        Write-Host 'No msstore version of pwsh 7 to add to controlled folder access' -ForegroundColor DarkYellow
     }
 
 
     $snipToolPath = (Get-ChildItem -Path 'C:\Program Files\WindowsApps\Microsoft.ScreenSketch*\SnippingTool\SnippingTool.exe' |
-        Sort-Object -Property LastWriteTime -Descending | Select-Object -First 1).FullName
+            Sort-Object -Property LastWriteTime -Descending | Select-Object -First 1).FullName
     if ($snipToolPath) {
         Write-Host "Adding [$snipToolPath] to controlled folder access allowed applications..." -ForegroundColor Blue
         Add-MpPreference -ControlledFolderAccessAllowedApplications $snipToolPath
     } else {
-        Write-Host "No msstore version of snipping tool to add to controlled folder access" -ForegroundColor DarkYellow
+        Write-Host 'No msstore version of snipping tool to add to controlled folder access' -ForegroundColor DarkYellow
     }
 
     $pwshScript = {
         $pwshModules = @(
-            "Az.Accounts"
-            "Az.Compute"
-            "Az.Websites"
-            "Az.ApplicationInsights"
-            "Az.Cdn"
-            "Az.Resources"
-            "Az.Storage"
-            "Az.Network"
-            "Az.KeyVault"
-            "Az.Monitor"
-            "Az.PolicyInsights"
-            "Az.FrontDoor"
-            "Az.TrafficManager"
-            "Az.Sql"
-            "Az.Do"
-            "Pester"
-            "PSDesiredStateConfiguration"
-            "SecretManagement.1Password"
-            "Terminal-Icons"
+            'Az.Accounts'
+            'Az.Compute'
+            'Az.Websites'
+            'Az.ApplicationInsights'
+            'Az.Cdn'
+            'Az.Resources'
+            'Az.Storage'
+            'Az.Network'
+            'Az.KeyVault'
+            'Az.Monitor'
+            'Az.PolicyInsights'
+            'Az.FrontDoor'
+            'Az.TrafficManager'
+            'Az.Sql'
+            'Az.Do'
+            'Pester'
+            'PSDesiredStateConfiguration'
+            'SecretManagement.1Password'
+            'Terminal-Icons'
         )
         $pwshModules | ForEach-Object {
             Write-Host "Installing [$PSItem] ..." -ForegroundColor Blue

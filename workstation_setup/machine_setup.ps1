@@ -16,6 +16,7 @@ $wingetApps = @(
     'Mozilla.Firefox'
     'Insomnia.Insomnia'
     'Microsoft.AzureCLI'
+    'Python.Python.3.12'
     'Valve.Steam'
     'EpicGames.EpicGamesLauncher'
 )

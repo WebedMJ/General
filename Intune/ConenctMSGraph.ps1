@@ -42,7 +42,7 @@ Connect-ToGraph -TenantId $tenantID -AppId $app -Scopes "DeviceManagementConfigu
                 Select-MgProfile -Name Beta
             }
             $graph = Connect-MgGraph -ClientId $AppId -TenantId $TenantId -Scopes $Scopes
-            Write-Host "Connected to Intune tenant $TenantId using app-based authentication (Azure AD authentication not supported)"
+            Write-Host "Connected to Intune tenant $TenantId"
         } else {
             if ($version -eq 2) {
                 Write-Host 'Version 2 module detected'

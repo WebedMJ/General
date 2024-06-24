@@ -119,7 +119,7 @@ getallpagination -url "https://graph.microsoft.com/v1.0/groups"
 Write-Host 'Connecting to Intune Graph'
 
 if ($AppId -ne '') {
-    Connect-ToGraph -Tenant $TenantId -AppId $AppId
+    Connect-ToGraph -Tenant $TenantId -AppId $AppId -scopes 'Device.ReadWrite.All, DeviceManagementManagedDevices.ReadWrite.All, DeviceManagementServiceConfig.ReadWrite.All, DeviceManagementConfiguration.ReadWrite.All'
     Write-Host "Connected to Intune tenant $TenantId using app-based authentication"
 } else {
     $graph = Connect-ToGraph -scopes 'Device.ReadWrite.All, DeviceManagementManagedDevices.ReadWrite.All, DeviceManagementServiceConfig.ReadWrite.All, DeviceManagementConfiguration.ReadWrite.All'

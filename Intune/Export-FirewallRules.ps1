@@ -3,8 +3,7 @@ param(
     [switch]$includeDisabledRules,
     [switch]$includeLocalRules,
     [string]$tenantId,
-    [string]$appid,
-    [string]$appsecret
+    [string]$appid
 )
 
 ## check for elevation

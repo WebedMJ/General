@@ -55,7 +55,7 @@ Connect-ToGraph -TenantId $tenantID -AppId $app -Scopes "DeviceManagementConfigu
     (
         [Parameter(Mandatory = $false)] [string]$TenantId,
         [Parameter(Mandatory = $false)] [string]$AppId,
-        [Parameter(Mandatory = $true)] [string]$Scopes
+        [Parameter(Mandatory = $false)] [string]$Scopes
     )
 
     Process {

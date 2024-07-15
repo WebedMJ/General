@@ -16,8 +16,8 @@ Import-Module '.\Scenario Modules\IntuneFirewallRulesMigration\FirewallRulesMigr
 # All group policy rules
 $rules = Get-NetFirewallRule -PolicyStore RSOP | ConvertTo-IntuneFirewallRule -splitConflictingAttributes
 
-# Rules with a display name of 'Steam'
-# $rules = Get-NetFirewallRule -DisplayName 'Steam' | ConvertTo-IntuneFirewallRule -splitConflictingAttributes
+# Rules with a display name of 'TestRule'
+# $rules = Get-NetFirewallRule -DisplayName 'TestRule' | ConvertTo-IntuneFirewallRule -splitConflictingAttributes
 
 ## See Intune-PowerShell-Management\Scenario Modules\IntuneFirewallRulesMigration\README.md for more
 

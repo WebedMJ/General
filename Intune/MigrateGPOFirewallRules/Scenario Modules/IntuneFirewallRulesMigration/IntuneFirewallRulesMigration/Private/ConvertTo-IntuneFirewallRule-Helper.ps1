@@ -38,16 +38,16 @@ function Get-FirewallDisplayName {
     )
     $displayNameLengthLimit = 200
     # replaces '/' and '|' as '_'; Intune does not allow '/' or '|' in display names
-    $formattedDisplayName = $firewallObject.displayName -replace "/|\|", "_"
+    $formattedDisplayName = $firewallObject.displayName -replace '/|\|', '_'
     # Intune sets a hard limit of 200 characters for display name lengths
     If ($firewallObject.displayName.Length -gt $displayNameLengthLimit) {
         $errorTitle = $Strings.FirewallRuleDisplayNameTooLongTitle
         $errorMessage = $Strings.FirewallRuleDisplayNameTooLongMessage `
             -f $firewallObject.DisplayName, $firewallObject.displayName.subString(0, $displayNameLengthLimit)
 
-        $yes = New-Object System.Management.Automation.Host.ChoiceDescription "&Yes", $($Strings.FirewallRuleDisplayNameYes -f $displayNameLengthLimit)
-        $no = New-Object System.Management.Automation.Host.ChoiceDescription "&No", $Strings.FirewallRuleDisplayNameNo
-        $rename = New-Object System.Management.Automation.Host.ChoiceDescription "&Rename", $Strings.FirewallRuleDisplayNameRename
+        $yes = New-Object System.Management.Automation.Host.ChoiceDescription '&Yes', $($Strings.FirewallRuleDisplayNameYes -f $displayNameLengthLimit)
+        $no = New-Object System.Management.Automation.Host.ChoiceDescription '&No', $Strings.FirewallRuleDisplayNameNo
+        $rename = New-Object System.Management.Automation.Host.ChoiceDescription '&Rename', $Strings.FirewallRuleDisplayNameRename
         $errorOptions = [System.Management.Automation.Host.ChoiceDescription[]]($yes, $no, $rename)
 
         $choice = Get-UserPrompt -promptTitle $errorTitle `
@@ -77,8 +77,8 @@ $packageSidLookup = @{ }
 # Package family names are represented internally as package SIDs (Security Identifiers), which are not accepted by Intune.
 # These SIDs can be translated by digging into the registry at the provided location
 ForEach ($registryItem in Get-ChildItem -Path HKLM:\SOFTWARE\Microsoft\SecurityManager\CapAuthz\ApplicationsEx) {
-    $packageFullName = $registryItem.Name -replace "^HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\SecurityManager\\CapAuthz\\ApplicationsEx\\", ""
-    $packageSid = $registryItem.GetValue("PackageSid")
+    $packageFullName = $registryItem.Name -replace '^HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\SecurityManager\\CapAuthz\\ApplicationsEx\\', ''
+    $packageSid = $registryItem.GetValue('PackageSid')
     If ($packageFullNameToFamilyName.ContainsKey($packageFullName)) {
         $packageSidLookup.Set_Item($packageSid, $packageFullNameToFamilyName[$packageFullName])
     }
@@ -118,8 +118,8 @@ function Get-FirewallPackageFamilyName {
                 $packageSid, `
                 $Strings.FirewallRulePackageFamilyNameDescription)
 
-        $yes = New-Object System.Management.Automation.Host.ChoiceDescription "&Yes", $Strings.FirewallRulePackageFamilyNameYes
-        $no = New-Object System.Management.Automation.Host.ChoiceDescription "&No", $Strings.FirewallRulePackageFamilyNameNo
+        $yes = New-Object System.Management.Automation.Host.ChoiceDescription '&Yes', $Strings.FirewallRulePackageFamilyNameYes
+        $no = New-Object System.Management.Automation.Host.ChoiceDescription '&No', $Strings.FirewallRulePackageFamilyNameNo
         $errorOptions = [System.Management.Automation.Host.ChoiceDescription[]]($yes, $no)
 
         $choice = Get-UserPrompt -promptTitle $errorTitle `
@@ -206,17 +206,16 @@ function Get-FirewallProtocol {
     # The behavior of the Get-NetFirewallPortFilter cmdlet is to return the string name of the protocol for these
     # specific protocols, everything else is a number
     Switch ($portFilterInstance.Protocol) {
-        "TCP" { return 6 }
-        "UDP" { return 17 }
-        "ICMPv4" { return 1 }
-        "ICMPv6" { return 58 }
+        'TCP' { return 6 }
+        'UDP' { return 17 }
+        'ICMPv4' { return 1 }
+        'ICMPv6' { return 58 }
         # the default 'All' value in graph is interpreted as a null argument for the protocol
         $Strings.Any { return $null }
         default {
             Try {
                 return [int]$portFilterInstance.Protocol
-            }
-            Catch {
+            } Catch {
                 Throw [ExportFirewallRuleException]::new($Strings.FirewallRuleProtocolException -f $_, $Strings.FirewallRuleProtocol)
             }
         }
@@ -330,7 +329,7 @@ function Get-FirewallPortRangeMapping {
         $exportType
     )
 
-    If ($port -eq "") {
+    If ($port -eq '') {
         return $null
     }
     # We interpret "Any" to be an empty array, with no restrictions on the ports
@@ -338,11 +337,11 @@ function Get-FirewallPortRangeMapping {
         return , @()
     }
     # Ports that match "xxx", where x is a digit, are acceptable
-    If ($port -match "^\d+$") {
+    If ($port -match '^\d+$') {
         return $port
     }
     # Ports that match a string containing "xxx-xxx", where x is a digit, are acceptable
-    If ($port -match "^\d+-\d+$") {
+    If ($port -match '^\d+-\d+$') {
         return $port
     }
     # There were a few strings such as 'RPC', 'RPC-EPM', 'Teredo', and 'IHTTPSIn', which are currently corner cases
@@ -410,12 +409,19 @@ function Get-FirewallAddressRange {
         [Parameter(Mandatory = $true)]
         $addressRange
     )
+    if ($addressRange -match '/') {
+        $details = $addressRange -split '/'
+        $netIp = $details[0]
+        $mask = $details[1]
+        $cidr = Convert-SubnetMaskToCIDR -subnetMask $mask
+        $addressRange = "$netIp/$cidr"
+    }
 
     # We perform minimal checking for addresses because of the extensive validation done in the graph,
     # but this may be subject to later changes if errors are frequently encountered
     Switch ($addressRange) {
         $Strings.Any { return $null }
-        "PlayToDevice" { Throw [ExportFirewallRuleException]::new($Strings.FirewallRuleAddressRangePlayToDeviceException, $Strings.FirewallRuleAddressRange) }
+        'PlayToDevice' { Throw [ExportFirewallRuleException]::new($Strings.FirewallRuleAddressRangePlayToDeviceException, $Strings.FirewallRuleAddressRange) }
         default { return $addressRange }
     }
 }
@@ -450,13 +456,13 @@ function Get-FirewallProfileType {
         # "Any" is interpreted as 0 according to the first link, but we can set the default
         # to be "All" by omitting any value in the attribute
         0 { return $null }
-        1 { return "domain" }
-        2 { return "private" }
-        3 { return "domain, private" }
-        4 { return "public" }
-        5 { return "domain, public" }
-        6 { return "private, public" }
-        7 { return "domain, private, public" }
+        1 { return 'domain' }
+        2 { return 'private' }
+        3 { return 'domain, private' }
+        4 { return 'public' }
+        5 { return 'domain, public' }
+        6 { return 'private, public' }
+        7 { return 'domain, private, public' }
         default { Throw [ExportFirewallRuleException]::new($($Strings.FirewallRuleProfileTypeException -f $profileTypes), $Strings.FirewallRuleProfileType) }
     }
 }
@@ -481,10 +487,10 @@ function Get-FirewallAction {
         $action
     )
     Switch ($action) {
-        2 { return "allowed" }
+        2 { return 'allowed' }
         # The reference suggests that AllowByPass is a known and expected value, which is not supported by Intune
         3 { Throw [ExportFirewallRuleException]::new($Strings.FirewallRuleActionAllowBypassException, $Strings.FirewallRuleAction) }
-        4 { return "blocked" }
+        4 { return 'blocked' }
         default { Throw [ExportFirewallRuleException]::new($($Strings.FirewallRuleActionException -f $action), $Strings.FirewallRuleAction) }
     }
 }
@@ -511,8 +517,8 @@ function Get-FirewallDirection {
     )
     # The values found here are in the link provided
     Switch ($direction) {
-        1 { return "in" }
-        2 { return "out" }
+        1 { return 'in' }
+        2 { return 'out' }
         default { Throw [ExportFirewallRuleException]::new($($Strings.FirewallRuleDirectionException -f $direction), $Strings.FirewallRuleDirection) }
     }
 }
@@ -562,9 +568,9 @@ function Get-FirewallInterfaceType {
     $interfaceType = Get-NetFirewallInterfaceTypeFilterWrapper -AssociatedNetFirewallRule $firewallObject
     Switch ($interfaceType.InterfaceType) {
         $Strings.Any { return $null }
-        "LocalAccess" { return "lan" }
-        "WirelessAccess" { return "wireless" }
-        "RemoteAccess" { return "remoteAccess" }
+        'LocalAccess' { return 'lan' }
+        'WirelessAccess' { return 'wireless' }
+        'RemoteAccess' { return 'remoteAccess' }
         default {
             Throw [ExportFirewallRuleException]::new($Strings.FirewallRuleInterfaceTypeException -f $interfaceType.InterfaceType, `
                     $Strings.FirewallRuleInterfaceType)
@@ -593,15 +599,14 @@ function Get-FirewallEdgeTraversalPolicy {
     # The values found here are in the link provided
     $direction = Get-FirewallDirection $firewallObject.Direction
     # Edge traversal policies are only recognized by the Graph if they are inbound
-    If ($direction -eq "in") {
+    If ($direction -eq 'in') {
         If ($firewallObject.EdgeTraversalPolicy -eq 0) {
-            return "blocked"
+            return 'blocked'
         }
         If ($firewallObject.EdgeTraversalPolicy -eq 1) {
-            return "allowed"
+            return 'allowed'
         }
-    }
-    ElseIf ($direction -eq "out" -and $firewallObject.EdgeTraversalPolicy -eq 0) {
+    } ElseIf ($direction -eq 'out' -and $firewallObject.EdgeTraversalPolicy -eq 0) {
         return $null
     }
     Throw [ExportFirewallRuleException]::new($($Strings.FirewallRuleEdgeTraversalException -f ($direction, $firewallObject.EdgeTraversalPolicy)), `
@@ -661,4 +666,13 @@ function Get-NetFirewallServiceFilterWrapper {
         $AssociatedNetFirewallRule
     )
     return Get-NetFirewallServiceFilter -AssociatedNetFirewallRule $AssociatedNetFirewallRule
+}
+
+function Convert-SubnetMaskToCIDR {
+    param (
+        [string]$subnetMask
+    )
+    $binaryMask = [Convert]::ToString(([IPAddress]$subnetMask).Address, 2)
+    $cidr = ($binaryMask -replace '0', '').Length
+    return $cidr
 }

@@ -407,23 +407,28 @@ function Get-FirewallAddressRange {
     #>
     Param(
         [Parameter(Mandatory = $true)]
-        $addressRange
+        [string[]]$addressRange
     )
-    if ($addressRange -match '/') {
-        $details = $addressRange -split '/'
-        $netIp = $details[0]
-        $mask = $details[1]
-        $cidr = Convert-SubnetMaskToCIDR -subnetMask $mask
-        $addressRange = "$netIp/$cidr"
-    }
+
+    $addressRangeArray = @()
 
     # We perform minimal checking for addresses because of the extensive validation done in the graph,
     # but this may be subject to later changes if errors are frequently encountered
-    Switch ($addressRange) {
-        $Strings.Any { return $null }
-        'PlayToDevice' { Throw [ExportFirewallRuleException]::new($Strings.FirewallRuleAddressRangePlayToDeviceException, $Strings.FirewallRuleAddressRange) }
-        default { return $addressRange }
+    foreach ($address in $addressRange) {
+        Switch ($address) {
+            $Strings.Any { return $null }
+            'PlayToDevice' { Throw [ExportFirewallRuleException]::new($Strings.FirewallRuleAddressRangePlayToDeviceException, $Strings.FirewallRuleAddressRange) }
+            { $address -match '/' } {
+                $details = $address -split '/'
+                $netIp = $details[0]
+                $mask = $details[1]
+                $cidr = Convert-SubnetMaskToCIDR -subnetMask $mask
+                $addressRangeArray += "$netIp/$cidr"
+            }
+            default { $addressRangeArray += $address }
+        }
     }
+    return $addressRangeArray
 }
 
 function Get-FirewallProfileType {

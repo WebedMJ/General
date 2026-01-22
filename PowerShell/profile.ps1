@@ -1,12 +1,12 @@
 # https://twitter.com/lee_holmes/status/1172640465767682048?s=12
 Set-PSReadLineOption -AddToHistoryHandler {
     param([string]$line)
-    $sensitive = "password|asplaintext|token|key|secret"
-    return ($line -notmatch $sensitive)
+    $sensitive = 'password|asplaintext|token|(?<!controlmon)key|secret'
+    $exceptions = 'keyvault'
+    return (($line -notmatch $sensitive) -or ($line -match $exceptions))
 }
-# $wc = New-Object System.Net.WebClient
-# $wc.Proxy.Credentials = [System.Net.CredentialCache]::DefaultNetworkCredentials
-# Import-Module posh-git
+Set-PSReadLineOption -PredictionSource History
+
 Import-Module -Name Terminal-Icons
-# Requires oh-my-posh module
-Set-PoshPrompt -Theme slopey
+[Console]::OutputEncoding = [Text.Encoding]::UTF8
+oh-my-posh init pwsh --config "<path>\oh-my-posh\<myconfig>.omp.json" | Invoke-Expression
